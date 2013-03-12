@@ -16,6 +16,9 @@ class PostTest extends TumblrTest
             // edit post
             array(function ($c) { $c->editPost('b.n', 123, array('d' => 'ata')); }, 'POST', 'v2/blog/b.n/post/edit', array('d' => 'ata', 'id' => 123)),
 
+            // create post
+            array(function ($c) { $c->createPost('b.n', array('d' => 'ata')); }, 'POST', 'v2/blog/b.n/post', array('d' => 'ata')),
+
         );
     }
 }

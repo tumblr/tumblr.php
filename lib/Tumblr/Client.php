@@ -179,6 +179,19 @@ class Client
     }
 
     /**
+     * Create a post
+     * @param string $blogName the name of the blog
+     * @param array $data the data to save
+     * @return array the response array
+     */
+    public function createPost($blogName, $data)
+    {
+        $path = $this->blogPath($blogName, '/post');
+
+        return $this->postRequest($path, $data, false);
+    }
+
+    /**
      * Get tagged posts
      * @param  string $tag     the tag to look up
      * @param  array  $options the options for the call

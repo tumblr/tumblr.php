@@ -57,9 +57,10 @@ $client->blogSubmissionPosts($blogName, $options = null);
 ### Post Methods
 
 ``` php
+$client->createPost($blogName, $data);
+$client->editPost($blogName, $id, $data);
 $client->deletePost($blogName, $id, $reblogKey);
 $client->reblogPost($blogName, $id, $reblogKey, $options = null);
-$client->editPost($blogName, $id, $data);
 ```
 
 ### Tagged Methods
