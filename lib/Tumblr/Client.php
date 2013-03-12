@@ -289,9 +289,7 @@ class Client
     private function parseResponse($response)
     {
         if ($response->status < 400) {
-            $data = json_decode($response->body);
-
-            return $data->response;
+            json_decode($response->body)->response;
         } else {
             $error = json_decode($response->body);
             $errstr = isset($data->meta) ? $data->meta->msg : 'Unknown Error';
