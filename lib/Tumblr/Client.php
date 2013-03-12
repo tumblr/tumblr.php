@@ -76,6 +76,7 @@ class Client
     public function follow($blogName)
     {
         $options = array('url' => $this->blogUrl($blogName));
+
         return $this->postRequest('v2/user/follow', $options, false);
     }
 
@@ -87,6 +88,7 @@ class Client
     public function unfollow($blogName)
     {
         $options = array('url' => $this->blogUrl($blogName));
+
         return $this->postRequest('v2/user/unfollow', $options, false);
     }
 
@@ -100,6 +102,7 @@ class Client
     public function like($blogName, $postId, $reblogKey)
     {
         $options = array('id' => $postId, 'reblog_key' => $reblogKey);
+
         return $this->postRequest('v2/user/like', $options, false);
     }
 
@@ -113,6 +116,7 @@ class Client
     public function unlike($blogName, $postId, $reblogKey)
     {
         $options = array('id' => $postId, 'reblog_key' => $reblogKey);
+
         return $this->postRequest('v2/user/unlike', $options, false);
     }
 
@@ -128,6 +132,7 @@ class Client
             $options = array();
         }
         $options['tag'] = $tag;
+
         return $this->getRequest('v2/tagged', $options, true);
     }
 
@@ -139,6 +144,7 @@ class Client
     public function getBlogInfo($blogName)
     {
         $path = $this->blogPath($blogName, '/info');
+
         return $this->getRequest($path, null, true);
     }
 
@@ -154,6 +160,7 @@ class Client
         if ($size) {
             $path .= "/$size";
         }
+
         return $this->getRedirect($path, null, true);
     }
 
@@ -166,6 +173,7 @@ class Client
     public function getBlogLikes($blogName, $options = null)
     {
         $path = $this->blogPath($blogName, '/likes');
+
         return $this->getRequest($path, $options, true);
     }
 
@@ -178,6 +186,7 @@ class Client
     public function getBlogFollowers($blogName, $options = null)
     {
         $path = $this->blogPath($blogName, '/followers');
+
         return $this->getRequest($path, $options, false);
     }
 
@@ -194,6 +203,7 @@ class Client
             $path .= '/' . $options['type'];
             unset($options['type']);
         }
+
         return $this->getRequest($path, $options, true);
     }
 
@@ -206,6 +216,7 @@ class Client
     public function getQueuedPosts($blogName, $options = null)
     {
         $path = $this->blogPath($blogName, '/posts/queue');
+
         return $this->getRequest($path, $options, false);
     }
 
@@ -218,6 +229,7 @@ class Client
     public function getDraftPosts($blogName, $options = null)
     {
         $path = $this->blogPath($blogName, '/posts/draft');
+
         return $this->getRequest($path, $options, false);
     }
 
@@ -230,6 +242,7 @@ class Client
     public function getSubmissionPosts($blogName, $options = null)
     {
         $path = $this->blogPath($blogName, '/posts/submission');
+
         return $this->getRequest($path, $options, false);
     }
 
@@ -249,6 +262,7 @@ class Client
     private function getRequest($path, $options, $addApiKey)
     {
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
+
         return $this->parseResponse($response);
     }
 
@@ -262,6 +276,7 @@ class Client
     private function postRequest($path, $options, $addApiKey)
     {
         $response = $this->makeRequest('POST', $path, $options, $addApiKey);
+
         return $this->parseResponse($response);
     }
 
@@ -275,6 +290,7 @@ class Client
     {
         if ($response->status < 400) {
             $data = json_decode($response->body);
+
             return $data->response;
         } else {
             $error = json_decode($response->body);
@@ -296,6 +312,7 @@ class Client
         if ($response->status === 301) {
             return $response->headers['Location'];
         }
+
         return null;
     }
 
@@ -327,6 +344,7 @@ class Client
     private function blogPath($blogName, $ext)
     {
         $blogUrl = $this->blogUrl($blogName);
+
         return "v2/$blogUrl$ext";
     }
 
@@ -340,6 +358,7 @@ class Client
         if (strpos($blogName, '.') === false) {
             return "$blogName.tumblr.com";
         }
+
         return $blogName;
     }
 
