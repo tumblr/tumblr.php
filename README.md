@@ -71,7 +71,14 @@ $client->reblogPost($blogName, $id, $reblogKey, $options = null);
 $client->taggedPosts($tag, $options = null);
 ```
 
--
+## Dependencies
+
+tumblr.php is available
+[on composer](https://packagist.org/packages/tumblr/tumblr)
+
+* guzzle/guzzle 3.1.*
+* eher/oauth 1.0.*
+
 ## Running tests
 
 tumblr.php has full unit tests that can be run with PHPUnit like this:
