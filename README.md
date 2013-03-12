@@ -3,6 +3,17 @@
 The official PHP client for the
 [Tumblr API](http://www.tumblr.com/docs/en/api/v2).
 
+## Usage
+
+### Getting Started
+
+The first step is setting up a Client:
+
+``` php
+$client = new Tumblr\Client($consumerKey, $consumerSecret);
+$client->setToken($token, $tokenSecret);
+```
+
 ## Running tests
 
 tumblr.php has full unit tests that can be run with PHPUnit like this:

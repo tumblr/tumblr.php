@@ -13,9 +13,10 @@ class Client
     /**
      * Create a new Client
      */
-    public function __construct()
+    public function __construct($consumerKey = null, $consumerSecret = null)
     {
         $this->requestHandler = new RequestHandler();
+        $this->setConsumer($consumerKey, $consumerSecret);
     }
 
     /**

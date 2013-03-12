@@ -39,7 +39,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase
             $response->body = '{"response":[]}';
         } elseif ($which == 'redirect') {
             $response->status = 301;
-            $response->headers = array('Location' => 'url');
+            $response->headers = array('Location' => array('url'));
         } elseif ($which == 'not_found') {
             $response->status = 404;
         }
