@@ -63,6 +63,26 @@ class API {
      }
 
     /**
+     * Follow a blog
+     * @param @blogName the name of the blog to follow
+     * @return [array] the response array
+     */
+    public function follow($blogName) {
+        $options = array('url' => $this->blogUrl($blogName));
+        return $this->postRequest('v2/user/follow', $options, false);
+    }
+
+    /**
+     * Unfollow a blog
+     * @param @blogName the name of the blog to follow
+     * @return [array] the response array
+     */
+    public function unfollow($blogName) {
+        $options = array('url' => $this->blogUrl($blogName));
+        return $this->postRequest('v2/user/unfollow', $options, false);
+    }
+
+    /**
      * Get tagged posts
      * @param $tag [string] the tag to look up
      * @param $options [array] the options for the call
@@ -184,6 +204,27 @@ class API {
      */
     private function getRequest($path, $options, $addApiKey) {
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
+        return $this->parseResponse($response);
+    }
+
+    /**
+     * Make a POST request to the given endpoint and return the response
+     * @param $path [string] the path to call on
+     * @param $options [array] the options to call with
+     * @param $addApiKey [boolean] whether or not to add the api key
+     */
+    private function postRequest($path, $options, $addApiKey) {
+        $response = $this->makeRequest('POST', $path, $options, $addApiKey);
+        return $this->parseResponse($response);
+    }
+
+    /**
+     * Parse a response and return an appropriate result
+     * @param $response [Object] the response from the server
+     * @return array the response data
+     * @throws an error occurred
+     */
+    private function parseResponse($response) {
         if ($response->status < 400) {
             $data = json_decode($response->body);
             return $data->response;
@@ -232,10 +273,20 @@ class API {
      * @return [string] the blog base path
      */
     private function blogPath($blogName, $ext) {
-        if (strpos($blogName, '.') === FALSE) {
-            $blogName = "$blogName.tumblr.com";
+        $blogUrl = $this->blogUrl($blogName);
+        return "v2/$blogUrl$ext";
+    }
+
+    /**
+     * Get the URL of a blog by name or URL
+     * @param $blogName [string] the name of the blog
+     * @return string the blog URL
+     */
+    private function blogUrl($blogName) {
+        if (strpos($blogName, '.') === false) {
+            return "$blogName.tumblr.com";
         }
-        return "v2/$blogName$ext";
+        return $blogName;
     }
 
 }

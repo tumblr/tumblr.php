@@ -1,5 +1,7 @@
 coverage
 .DS_Store
 
+composer.phar
+
 *.swp
 *.swo

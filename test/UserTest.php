@@ -20,6 +20,12 @@ class UserTest extends TumblrTest {
             array(function ($c) { $c->getLikedPosts(); }, 'GET', 'v2/user/likes', null),
             array(function ($c) { $c->getLikedPosts(array('limit' => 10)); }, 'GET', 'v2/user/likes', array('limit' => 10)),
 
+            // follow
+            array(function ($c) { $c->follow('b'); }, 'POST', 'v2/user/follow', array('url' => 'b.tumblr.com')),
+            array(function ($c) { $c->follow('b.n'); }, 'POST', 'v2/user/follow', array('url' => 'b.n')),
+            // unfollow
+            array(function ($c) { $c->unfollow('b'); }, 'POST', 'v2/user/unfollow', array('url' => 'b.tumblr.com')),
+ 
         );
     }
 
