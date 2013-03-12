@@ -17,7 +17,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase {
             ->will($this->returnValue($response));
 
         // Create a new client and set it up to use that request handler
-        $client = new Tumblr\API;
+        $client = new Tumblr\Client;
         $ref = new ReflectionObject($client);
         $prop = $ref->getProperty('requestHandler');
         $prop->setAccessible(true);

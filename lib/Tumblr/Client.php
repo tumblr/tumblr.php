@@ -6,7 +6,7 @@ require_once(__DIR__ . '/RequestHandler.php');
 /**
  * A client to access the Tumblr API
  */
-class API {
+class Client {
 
     private $apiKey;
 
