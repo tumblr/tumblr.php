@@ -1,0 +1,5 @@
+coverage
+.DS_Store
+
+*.swp
+*.swo
