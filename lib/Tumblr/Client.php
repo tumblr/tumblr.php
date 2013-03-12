@@ -13,7 +13,7 @@ class Client
 
     /**
      * Create a new Client
-     * @param string $consumerKey the consumer key
+     * @param string $consumerKey    the consumer key
      * @param string $consumerSecret the consumer secret
      */
     public function __construct($consumerKey = null, $consumerSecret = null)
@@ -35,7 +35,7 @@ class Client
 
     /**
      * Set the token for this client
-     * @param string $token the oauth token
+     * @param string $token  the oauth token
      * @param string $secret the oauth secret
      */
     public function setToken($token, $secret)
@@ -151,11 +151,11 @@ class Client
 
     /**
      * Reblog a post
-     * @param string $blogName the name of the blog
-     * @param int $postId the id of the post
-     * @param string $reblogKey the reblog key of the post
-     * @param array $options the options for the call
-     * @return array the response array
+     * @param  string $blogName  the name of the blog
+     * @param  int    $postId    the id of the post
+     * @param  string $reblogKey the reblog key of the post
+     * @param  array  $options   the options for the call
+     * @return array  the response array
      */
     public function reblogPost($blogName, $postId, $reblogKey, $options = null)
     {
@@ -168,10 +168,10 @@ class Client
 
     /**
      * Edit a post
-     * @param string $blogName the name of the blog
-     * @param int $postId the id of the post to edit
-     * @param array $data the data to save
-     * @return array the response array
+     * @param  string $blogName the name of the blog
+     * @param  int    $postId   the id of the post to edit
+     * @param  array  $data     the data to save
+     * @return array  the response array
      */
     public function editPost($blogName, $postId, $data)
     {
@@ -183,9 +183,9 @@ class Client
 
     /**
      * Create a post
-     * @param string $blogName the name of the blog
-     * @param array $data the data to save
-     * @return array the response array
+     * @param  string $blogName the name of the blog
+     * @param  array  $data     the data to save
+     * @return array  the response array
      */
     public function createPost($blogName, $data)
     {

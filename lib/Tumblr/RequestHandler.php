@@ -28,7 +28,7 @@ class RequestHandler
 
     /**
      * Set the consumer for this request handler
-     * @param string $key the consumer key
+     * @param string $key    the consumer key
      * @param string $secret the consumer secret
      */
     public function setConsumer($key, $secret)
@@ -38,18 +38,19 @@ class RequestHandler
 
     /**
      * Set the token for this request handler
-     * @param string $token the oauth token
+     * @param string $token  the oauth token
      * @param string $secret the oauth secret
      */
-    public function setToken($token, $secret) {
+    public function setToken($token, $secret)
+    {
         $this->token = new \Eher\OAuth\Token($token, $secret);
     }
 
     /**
      * Make a request with this request handler
-     * @param string $method one of GET, POST
-     * @param string $path the path to hit
-     * @param array $options the array of params
+     * @param  string   $method  one of GET, POST
+     * @param  string   $path    the path to hit
+     * @param  array    $options the array of params
      * @return stdClass response object
      */
     public function request($method, $path, $options)
@@ -101,6 +102,7 @@ class RequestHandler
         $obj->status = $response->getStatusCode();
         $obj->body = $response->getBody();
         $obj->headers = $response->getHeaders();
+
         return $obj;
 
     }
