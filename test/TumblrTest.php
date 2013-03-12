@@ -1,11 +1,12 @@
 <?php
 
-class TumblrTest extends PHPUnit_Framework_TestCase {
-
+class TumblrTest extends PHPUnit_Framework_TestCase
+{
     /**
      * @dataProvider providerCalls
      */
-    public function testCalls($callable, $type, $path, $params, $which_mock = 'perfect') {
+    public function testCalls($callable, $type, $path, $params, $which_mock = 'perfect')
+    {
         // a good response
         $response = $this->getResponseMock($which_mock);
 
@@ -30,17 +31,19 @@ class TumblrTest extends PHPUnit_Framework_TestCase {
         $callable($client);
     }
 
-    private function getResponseMock($which) {
+    private function getResponseMock($which)
+    {
         $response = new stdClass;
         if ($which == 'perfect') {
             $response->status = 200;
             $response->body = '{"response":[]}';
-        } else if ($which == 'redirect') {
+        } elseif ($which == 'redirect') {
             $response->status = 301;
             $response->headers = array('Location' => 'url');
-        } else if ($which == 'not_found') {
+        } elseif ($which == 'not_found') {
             $response->status = 404;
         }
+
         return $response;
     }
 

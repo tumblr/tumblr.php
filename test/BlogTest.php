@@ -1,9 +1,11 @@
 <?php
 
-class BlogTest extends TumblrTest {
-
-    public function providerCalls() {
+class BlogTest extends TumblrTest
+{
+    public function providerCalls()
+    {
         $test = $this; // for inner context
+
         return array(
 
             // getBlogInfo

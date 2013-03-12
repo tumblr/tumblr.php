@@ -1,8 +1,9 @@
 <?php
 
-class TaggedTest extends TumblrTest {
-
-    public function providerCalls() {
+class TaggedTest extends TumblrTest
+{
+    public function providerCalls()
+    {
         return array(
 
             // getTaggedPosts
