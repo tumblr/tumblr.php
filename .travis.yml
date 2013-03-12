@@ -1,4 +1,5 @@
 language: php
+before_script: composer install
 
 php:
   - 5.4
