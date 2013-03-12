@@ -5,7 +5,7 @@ namespace Tumblr;
 /**
  * A request handler for Tumblr authentication
  */
-class Request {
+class RequestHandler {
 
     private $consumerKey;
     private $consumerSecret;

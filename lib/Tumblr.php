@@ -1,7 +1,7 @@
 <?php
 
 namespace Tumblr;
-require_once('lib/Request.php');
+require_once('lib/RequestHandler.php');
 
 /**
  * A client to access the Tumblr API
@@ -14,7 +14,7 @@ class API {
      * Create a new Client
      */
     public function __construct() {
-        $this->requestHandler = new Request();
+        $this->requestHandler = new RequestHandler();
     }
 
     /**
