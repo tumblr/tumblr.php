@@ -1,7 +1,7 @@
 <?php
 
 namespace Tumblr;
-require_once('lib/RequestHandler.php');
+require_once(__DIR__ . '/RequestHandler.php');
 
 /**
  * A client to access the Tumblr API
