@@ -31,9 +31,11 @@ class RequestHandler
         $this->token = new \Eher\OAuth\Token($token, $secret);
     }
 
-    // TODO POST
     public function request($method, $path, $options)
     {
+
+        $file = isset($options['data']) ? $options['data'] : false;
+        unset($options['data']);
 
         $url = "http://api.tumblr.com/$path";
         $oauth = \Eher\OAuth\Request::from_consumer_and_token(
@@ -46,9 +48,17 @@ class RequestHandler
         $pieces = explode(' ', $authHeader, 2);
         $authString = $pieces[1];
 
-        $request = $this->client->get($url);
-        $request->addHeader('Authorization', $authString);
-        $request->getQuery()->merge($options);
+        if ($method === 'GET') {
+            $request = $this->client->get($url, null);
+            $request->addHeader('Authorization', $authString);
+            $request->getQuery()->merge($options);
+        } else {
+            $request = $this->client->post($url, null, $options);
+            $request->addHeader('Authorization', $authString);
+            if ($file) {
+                $request->addPostFiles(array('data' => $file));
+            }
+        }
 
         try {
             $response = $request->send();
