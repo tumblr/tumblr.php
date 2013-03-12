@@ -110,7 +110,7 @@ class Client
      * @param  string $reblogKey the reblog_key of the post
      * @return array  the response array
      */
-    public function like($blogName, $postId, $reblogKey)
+    public function like($postId, $reblogKey)
     {
         $options = array('id' => $postId, 'reblog_key' => $reblogKey);
 
@@ -124,11 +124,26 @@ class Client
      * @param  string $reblogKey the reblog_key of the post
      * @return array  the response array
      */
-    public function unlike($blogName, $postId, $reblogKey)
+    public function unlike($postId, $reblogKey)
     {
         $options = array('id' => $postId, 'reblog_key' => $reblogKey);
 
         return $this->postRequest('v2/user/unlike', $options, false);
+    }
+
+    /**
+     * Delete a post
+     * @param  string $blogName  the name of the blog the post is on
+     * @param  int    $postId    the id of the post
+     * @param  string $reblogKey the reblog_key of the post
+     * @return array  the response array
+     */
+    public function deletePost($blogName, $postId, $reblogKey)
+    {
+        $options = array('id' => $postId, 'reblog_key' => $reblogKey);
+        $path = $this->blogPath($blogName, '/post/delete');
+
+        return $this->postRequest($path, $options, false);
     }
 
     /**

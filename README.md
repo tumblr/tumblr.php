@@ -54,6 +54,12 @@ $client->blogDraftPosts($blogName, $options = null);
 $client->blogSubmissionPosts($blogName, $options = null);
 ```
 
+### Post Methods
+
+``` php
+$client->deletePost($blogName, $id, $reblogKey);
+```
+
 ### Tagged Methods
 
 ``` php
