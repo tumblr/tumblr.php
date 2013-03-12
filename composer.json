@@ -1,6 +1,34 @@
 {
 
-  "name": "tumblr",
+  "name": "tumblr/tumblr",
+
+  "description": "Official Tumblr PHP Client",
+
+  "keywords": ["tumblr", "api", "sdk", "gif"],
+
+  "homepage": "https://github.com/tumblr/tumblr.php",
+
+  "authors": [
+    {
+      "name": "John Crepezzi",
+      "email": "john.crepezzi@gmail.com",
+      "homepage": "https://github.com/seejohnrun",
+      "role": "developer"
+    }
+  ],
+
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/tumblr/tumblr.php"
+    }
+  ],
+
+  "license": "Apache-2.0",
+
+  "type": "library",
+
+  "version": "0.0.1",
 
   "require": {
     "eher/oauth": "1.0.*",
