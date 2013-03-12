@@ -147,6 +147,23 @@ class Client
     }
 
     /**
+     * Reblog a post
+     * @param string $blogName the name of the blog
+     * @param int $postId the id of the post
+     * @param string $reblogKey the reblog key of the post
+     * @param array $options the options for the call
+     * @return array the response array
+     */
+    public function reblogPost($blogName, $postId, $reblogKey, $options = null)
+    {
+        $params = array('id' => $postId, 'reblog_key' => $reblogKey);
+        $params = array_merge($options ?: array(), $params);
+        $path = $this->blogPath($blogName, '/post/reblog');
+
+        return $this->postRequest($path, $params, false);
+    }
+
+    /**
      * Get tagged posts
      * @param  string $tag     the tag to look up
      * @param  array  $options the options for the call
