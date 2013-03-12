@@ -12,6 +12,8 @@ class Client
 
     /**
      * Create a new Client
+     * @param string $consumerKey the consumer key
+     * @param string $consumerSecret the consumer secret
      */
     public function __construct($consumerKey = null, $consumerSecret = null)
     {
