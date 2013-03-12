@@ -2,6 +2,7 @@
 
 namespace Tumblr;
 require_once(__DIR__ . '/RequestHandler.php');
+require_once(__DIR__ . '/RequestException.php');
 
 /**
  * A client to access the Tumblr API
@@ -361,13 +362,11 @@ class Client
      */
     private function parseResponse($response)
     {
+        $response->json = json_decode($response->body);
         if ($response->status < 400) {
-            $data = json_decode($response->body);
-            return $data->response;
+            return $response->json->response;
         } else {
-            $error = json_decode($response->body);
-            $errstr = isset($error->meta) ? $error->meta->msg : 'Unknown Error';
-            throw new \Exception($errstr);
+            throw new RequestException($response);
         }
     }
 
