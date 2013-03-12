@@ -319,7 +319,7 @@ class Client
     {
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
         if ($response->status === 301) {
-            return $response->headers['Location'];
+            return $response->headers['Location'][0];
         }
 
         return null;
@@ -354,7 +354,7 @@ class Client
     {
         $blogUrl = $this->blogUrl($blogName);
 
-        return "v2/$blogUrl$ext";
+        return "v2/blog/$blogUrl$ext";
     }
 
     /**
