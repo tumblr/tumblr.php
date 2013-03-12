@@ -41,7 +41,7 @@
 
   "autoload": {
     "psr-0": {
-      "Tumblr": "lib"
+      "Tumblr\API": "lib/Tumblr/API"
     }
   }
 

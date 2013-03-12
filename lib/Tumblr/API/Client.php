@@ -1,6 +1,6 @@
 <?php
 
-namespace Tumblr;
+namespace Tumblr\API;
 require_once(__DIR__ . '/RequestHandler.php');
 require_once(__DIR__ . '/RequestException.php');
 

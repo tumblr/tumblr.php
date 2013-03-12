@@ -11,14 +11,14 @@ class TumblrTest extends PHPUnit_Framework_TestCase
         $response = $this->getResponseMock($which_mock);
 
         // Create request mock and set it to check for the proper response
-        $request = $this->getMock('Tumblr\RequestHandler', array('request'));
+        $request = $this->getMock('Tumblr\API\RequestHandler', array('request'));
         $request->expects($this->once())
             ->method('request')
             ->with($this->equalTo($type), $this->equalTo($path), $this->equalTo($params))
             ->will($this->returnValue($response));
 
         // Create a new client and set it up to use that request handler
-        $client = new Tumblr\Client;
+        $client = new Tumblr\API\Client;
         $ref = new ReflectionObject($client);
         $prop = $ref->getProperty('requestHandler');
         $prop->setAccessible(true);
