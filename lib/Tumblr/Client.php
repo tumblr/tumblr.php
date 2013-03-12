@@ -19,8 +19,8 @@ class Client {
 
     /**
      * Set the consumer for this client
-     * @param $consumerKey [string] the consumer key
-     * @param $consumerSecret [string] the consumer secret
+     * @param string $consumerKey the consumer key
+     * @param string $consumerSecret the consumer secret
      */
     public function setConsumer($consumerKey, $consumerSecret) {
         $this->apiKey = $consumerKey;
@@ -29,7 +29,7 @@ class Client {
 
     /**
      * Get info on the authenticating user
-     * @return [array] the response array
+     * @return array the response array
      */
     public function getUserInfo() {
         return $this->getRequest('v2/user/info', null, false);
@@ -37,8 +37,8 @@ class Client {
 
     /**
      * Get user dashboard for the authenticating user
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getDashboardPosts($options = null) {
         return $this->getRequest('v2/user/dashboard', $options, false);
@@ -46,8 +46,8 @@ class Client {
 
     /**
      * Get followings for the authenticating user
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getFollowedBlogs($options = null) {
         return $this->getRequest('v2/user/following', $options, false);
@@ -55,8 +55,8 @@ class Client {
 
     /**
      * Get likes for the authenticating user
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param array $options the options for the call
+     * @return array the response array
      */
      public function getLikedPosts($options = null) {
         return $this->getRequest('v2/user/likes', $options, false);
@@ -64,8 +64,8 @@ class Client {
 
     /**
      * Follow a blog
-     * @param @blogName the name of the blog to follow
-     * @return [array] the response array
+     * @param string $blogName the name of the blog to follow
+     * @return array the response array
      */
     public function follow($blogName) {
         $options = array('url' => $this->blogUrl($blogName));
@@ -74,8 +74,8 @@ class Client {
 
     /**
      * Unfollow a blog
-     * @param @blogName the name of the blog to follow
-     * @return [array] the response array
+     * @param string $blogName the name of the blog to follow
+     * @return array the response array
      */
     public function unfollow($blogName) {
         $options = array('url' => $this->blogUrl($blogName));
@@ -84,9 +84,9 @@ class Client {
 
     /**
      * Get tagged posts
-     * @param $tag [string] the tag to look up
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param string $tag the tag to look up
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getTaggedPosts($tag, $options = null) {
         if (!$options) {
@@ -98,8 +98,8 @@ class Client {
 
     /**
      * Get information about a given blog
-     * @param $blogName [string] the name of the blog to look up
-     * @return [array] the response array
+     * @param string $blogName the name of the blog to look up
+     * @return array the response array
      */
     public function getBlogInfo($blogName) {
         $path = $this->blogPath($blogName, '/info');
@@ -108,9 +108,9 @@ class Client {
 
     /**
      * Get blog avatar URL
-     * @param $blogName [string] the nae of the blog to look up
-     * @param $size [int] the size to retrieve
-     * @return [string] the avatar url
+     * @param string $blogName the nae of the blog to look up
+     * @param int $size the size to retrieve
+     * @return string the avatar url
      */
     public function getBlogAvatar($blogName, $size = null) {
         $path = $this->blogPath($blogName, '/avatar');
@@ -122,9 +122,9 @@ class Client {
 
     /**
      * Get blog likes for a given blog
-     * @param $blogName [string] the name of the blog to look up
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param string $blogName the name of the blog to look up
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getBlogLikes($blogName, $options = null) {
         $path = $this->blogPath($blogName, '/likes');
@@ -133,9 +133,9 @@ class Client {
 
     /**
      * Get blog followers for a given blog
-     * @param $blogName [string] the name of the blog to look up
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param string $blogName the name of the blog to look up
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getBlogFollowers($blogName, $options = null) {
         $path = $this->blogPath($blogName, '/followers');
@@ -144,9 +144,9 @@ class Client {
 
     /**
      * Get posts for a given blog
-     * @param $blogName [string] the name of the blog
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param string $blogName the name of the blog
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getBlogPosts($blogName, $options = null) {
         $path = $this->blogPath($blogName, '/posts');
@@ -159,9 +159,9 @@ class Client {
 
     /**
      * Get queue posts for a given blog
-     * @param $blogName [string] the name of the blog
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param string $blogName the name of the blog
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getQueuedPosts($blogName, $options = null) {
         $path = $this->blogPath($blogName, '/posts/queue');
@@ -170,9 +170,9 @@ class Client {
 
     /**
      * Get draft posts for a given blog
-     * @param $blogName [string] the name of the blog
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param string $blogName the name of the blog
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getDraftPosts($blogName, $options = null) {
         $path = $this->blogPath($blogName, '/posts/draft');
@@ -181,9 +181,9 @@ class Client {
 
     /**
      * Get submission posts for a given blog
-     * @param $blogName [string] the name of the blog
-     * @param $options [array] the options for the call
-     * @return [array] the response array
+     * @param string $blogName the name of the blog
+     * @param array $options the options for the call
+     * @return array the response array
      */
     public function getSubmissionPosts($blogName, $options = null) {
         $path = $this->blogPath($blogName, '/posts/submission');
@@ -198,9 +198,10 @@ class Client {
 
     /**
      * Make a GET request to the given endpoint and return the response
-     * @param $path [string] the path to call on
-     * @param $options [array] the options to call with
-     * @param $addApiKey [boolean] whether or not to add the api key
+     * @param string $path the path to call on
+     * @param array $options the options to call with
+     * @param bool $addApiKey whether or not to add the api key
+     * @return array the response object (parsed)
      */
     private function getRequest($path, $options, $addApiKey) {
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
@@ -209,9 +210,10 @@ class Client {
 
     /**
      * Make a POST request to the given endpoint and return the response
-     * @param $path [string] the path to call on
-     * @param $options [array] the options to call with
-     * @param $addApiKey [boolean] whether or not to add the api key
+     * @param string $path the path to call on
+     * @param array $options the options to call with
+     * @param bool $addApiKey whether or not to add the api key
+     * @return array the response object (parsed)
      */
     private function postRequest($path, $options, $addApiKey) {
         $response = $this->makeRequest('POST', $path, $options, $addApiKey);
@@ -220,7 +222,7 @@ class Client {
 
     /**
      * Parse a response and return an appropriate result
-     * @param $response [Object] the response from the server
+     * @param object $response the response from the server
      * @return array the response data
      * @throws an error occurred
      */
@@ -237,10 +239,10 @@ class Client {
 
     /**
      * Make a GET request to the given endpoint and return the response
-     * @param $path [string] the path to call on
-     * @param $options [array] the options to call with
-     * @param $addApiKey [boolean] whether or not to add the api key
-     * @return [string] url redirected to (or null)
+     * @param string $path the path to call on
+     * @param array $options the options to call with
+     * @param bool $addApiKey whether or not to add the api key
+     * @return string url redirected to (or null)
      */
     private function getRedirect($path, $options, $addApiKey) {
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
@@ -252,10 +254,11 @@ class Client {
 
     /**
      * Make a request to the given endpoint and return the response
-     * @param $method [string] the method to call: GET, POST
-     * @param $path [string] the path to call on
-     * @param $options [array] the options to call with
-     * @param $addApiKey [boolean] whether or not to add the api key
+     * @param string $method the method to call: GET, POST
+     * @param string $path the path to call on
+     * @param array $options the options to call with
+     * @param bool $addApiKey whether or not to add the api key
+     * @return string the response object (not parsed)
      */
     private function makeRequest($method, $path, $options, $addApiKey) {
         if ($addApiKey) {
@@ -269,8 +272,8 @@ class Client {
 
     /**
      * Expand the given blogName into a base path for the blog
-     * @param $blogName [string] the name of the blog
-     * @return [string] the blog base path
+     * @param string $blogName the name of the blog
+     * @return string the blog base path
      */
     private function blogPath($blogName, $ext) {
         $blogUrl = $this->blogUrl($blogName);
@@ -279,7 +282,7 @@ class Client {
 
     /**
      * Get the URL of a blog by name or URL
-     * @param $blogName [string] the name of the blog
+     * @param string $blogName the name of the blog
      * @return string the blog URL
      */
     private function blogUrl($blogName) {
