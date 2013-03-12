@@ -30,6 +30,16 @@ class Client
     }
 
     /**
+     * Set the token for this client
+     * @param string $token the oauth token
+     * @param string $secret the oauth secret
+     */
+    public function setToken($token, $secret)
+    {
+        $this->requestHandler->setToken($token, $secret);
+    }
+
+    /**
      * Get info on the authenticating user
      * @return array the response array
      */
@@ -289,11 +299,12 @@ class Client
     private function parseResponse($response)
     {
         if ($response->status < 400) {
-            json_decode($response->body)->response;
+            $data = json_decode($response->body);
+            return $data->response;
         } else {
             $error = json_decode($response->body);
-            $errstr = isset($data->meta) ? $data->meta->msg : 'Unknown Error';
-            throw new Exception($errstr);
+            $errstr = isset($error->meta) ? $error->meta->msg : 'Unknown Error';
+            throw new \Exception($errstr);
         }
     }
 

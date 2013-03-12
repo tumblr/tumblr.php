@@ -1,5 +1,20 @@
 {
 
-  "name": "tumblr"
+  "name": "tumblr",
+
+  "require": {
+    "eher/oauth": "1.0.*",
+    "guzzle/guzzle": "3.1.*"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "Tumblr": "lib"
+    }
+  }
 
 }

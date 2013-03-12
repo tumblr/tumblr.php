@@ -5,3 +5,8 @@ composer.phar
 
 *.swp
 *.swo
+
+usage.php
+
+vendor
+composer.lock
