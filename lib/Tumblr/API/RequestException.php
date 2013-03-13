@@ -6,7 +6,7 @@ class RequestException extends \Exception
 {
     public function __construct($response)
     {
-        $error = $response->json;
+        $error = json_decode($response->body);
         $errstr = isset($error->meta) ? $error->meta->msg : 'Unknown Error';
 
         $this->statusCode = $response->status;
@@ -16,7 +16,7 @@ class RequestException extends \Exception
 
     public function __toString()
     {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+        return __CLASS__ . ": [$this->statusCode]: $this->message\n";
     }
 
 }
