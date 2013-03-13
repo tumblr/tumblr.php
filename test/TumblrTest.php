@@ -26,6 +26,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase
 
         // Give it an API key
         $client->setConsumer(API_KEY, null);
+        $client->setToken('t1', 't2');
 
         // And then run the callback to check the results
         $callable($client);
@@ -42,6 +43,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase
             $response->headers = array('Location' => array('url'));
         } elseif ($which == 'not_found') {
             $response->status = 404;
+            $response->body = '{}';
         }
 
         return $response;

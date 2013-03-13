@@ -50,4 +50,17 @@ class BlogTest extends TumblrTest
         );
     }
 
+    public function testNotFound()
+    {
+        try {
+            $this->testCalls(function ($c) {
+                $c->getBlogInfo('b');
+            }, 'GET', 'v2/blog/b.tumblr.com/info', array('api_key' => API_KEY), 'not_found');
+        } catch (\Tumblr\API\RequestException $e) {
+            $this->assertEquals((string) $e, "Tumblr\API\RequestException: [404]: Unknown Error\n");
+            return;
+        }
+        $this->fail('no error thrown');
+    }
+
 }
