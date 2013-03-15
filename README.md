@@ -79,6 +79,10 @@ tumblr.php is available
 * guzzle/guzzle 3.1.*
 * eher/oauth 1.0.*
 
+If you're using composer (you should!) you can just run
+`php composer.phar install` and you'll be good to go.  More details on
+[getcomposer.org](http://getcomposer.org/).
+
 ## Running tests
 
 tumblr.php has full unit tests that can be run with PHPUnit like this:
