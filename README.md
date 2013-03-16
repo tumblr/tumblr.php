@@ -12,7 +12,7 @@ The official PHP client for the
 The first step is setting up a Client:
 
 ``` php
-$client = new Tumblr\Client($consumerKey, $consumerSecret);
+$client = new Tumblr\API\Client($consumerKey, $consumerSecret);
 $client->setToken($token, $tokenSecret);
 ```
 
