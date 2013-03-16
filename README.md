@@ -68,7 +68,7 @@ $client->reblogPost($blogName, $id, $reblogKey, $options = null);
 ### Tagged Methods
 
 ``` php
-$client->taggedPosts($tag, $options = null);
+$client->getTaggedPosts($tag, $options = null);
 ```
 
 ## Dependencies
