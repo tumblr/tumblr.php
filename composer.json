@@ -17,18 +17,9 @@
     }
   ],
 
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/tumblr/tumblr.php"
-    }
-  ],
-
   "license": "Apache-2.0",
 
   "type": "library",
-
-  "version": "0.0.2",
 
   "require": {
     "eher/oauth": "1.0.*",
@@ -41,7 +32,7 @@
 
   "autoload": {
     "psr-0": {
-      "Tumblr\\API": "lib/Tumblr/API"
+      "Tumblr\\API": "lib"
     }
   }
 
