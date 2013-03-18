@@ -36,8 +36,8 @@ $client->getFollowedBlogs($options = null);
 $client->follow($blogName);
 $client->unfollow($blogName);
 
-$client->like($blogName, $postId, $reblogKey);
-$client->unlike($blogName, $postId, $reblogKey);
+$client->like($postId, $reblogKey);
+$client->unlike($postId, $reblogKey);
 ```
 
 ### Blog Methods
