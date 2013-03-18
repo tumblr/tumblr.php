@@ -117,14 +117,14 @@ class Client
         return $this->postRequest('v2/user/unfollow', $options, false);
     }
 
-  /**
-   * Like a post
-   *
-   * @param  int     $postId    the id of the post
-   * @param  string  $reblogKey the reblog_key of the post
-   *
-   * @return array  the response array
-   */
+    /**
+     * Like a post
+     *
+     * @param int    $postId    the id of the post
+     * @param string $reblogKey the reblog_key of the post
+     *
+     * @return array the response array
+     */
     public function like($postId, $reblogKey)
     {
         $options = array('id' => $postId, 'reblog_key' => $reblogKey);
@@ -455,14 +455,14 @@ class Client
         return $this->requestHandler->request($method, $path, $options);
     }
 
-  /**
-   * Expand the given blogName into a base path for the blog
-   *
-   * @param  string $blogName the name of the blog
-   * @param  string $ext      the url extension
-   *
-   * @return string the blog base path
-   */
+    /**
+     * Expand the given blogName into a base path for the blog
+     *
+     * @param string $blogName the name of the blog
+     * @param string $ext      the url extension
+     *
+     * @return string the blog base path
+     */
     private function blogPath($blogName, $ext)
     {
         $blogUrl = $this->blogUrl($blogName);
