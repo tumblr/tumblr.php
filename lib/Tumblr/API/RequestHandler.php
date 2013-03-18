@@ -2,8 +2,6 @@
 
 namespace Tumblr\API;
 
-require 'vendor/autoload.php';
-
 /**
  * A request handler for Tumblr authentication
  * and requests
