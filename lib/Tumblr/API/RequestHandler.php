@@ -2,8 +2,6 @@
 
 namespace Tumblr\API;
 
-require 'vendor/autoload.php';
-
 /**
  * A request handler for Tumblr authentication
  * and requests
@@ -28,6 +26,7 @@ class RequestHandler
 
     /**
      * Set the consumer for this request handler
+     *
      * @param string $key    the consumer key
      * @param string $secret the consumer secret
      */
@@ -38,6 +37,7 @@ class RequestHandler
 
     /**
      * Set the token for this request handler
+     *
      * @param string $token  the oauth token
      * @param string $secret the oauth secret
      */
@@ -48,14 +48,15 @@ class RequestHandler
 
     /**
      * Make a request with this request handler
+     *
      * @param  string   $method  one of GET, POST
      * @param  string   $path    the path to hit
      * @param  array    $options the array of params
-     * @return stdClass response object
+     *
+     * @return \stdClass response object
      */
     public function request($method, $path, $options)
     {
-
         // Ensure we have options
         $options ?: array();
 
@@ -97,14 +98,13 @@ class RequestHandler
             $response = $request->getResponse();
         }
 
-        // Construct the objec that the Client expects to see, and return it
+        // Construct the object that the Client expects to see, and return it
         $obj = new \stdClass;
         $obj->status = $response->getStatusCode();
         $obj->body = $response->getBody();
         $obj->headers = $response->getHeaders();
 
         return $obj;
-
     }
 
 }
