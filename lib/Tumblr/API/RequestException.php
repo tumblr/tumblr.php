@@ -4,6 +4,10 @@ namespace Tumblr\API;
 
 class RequestException extends \Exception
 {
+
+    /**
+     * @param \stdClass $response
+     */
     public function __construct($response)
     {
         $error = json_decode($response->body);

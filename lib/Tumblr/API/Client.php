@@ -1,6 +1,7 @@
 <?php
 
 namespace Tumblr\API;
+
 require_once(__DIR__ . '/RequestHandler.php');
 require_once(__DIR__ . '/RequestException.php');
 
@@ -9,10 +10,12 @@ require_once(__DIR__ . '/RequestException.php');
  */
 class Client
 {
+
     private $apiKey;
 
     /**
      * Create a new Client
+     *
      * @param string $consumerKey    the consumer key
      * @param string $consumerSecret the consumer secret
      */
@@ -24,6 +27,7 @@ class Client
 
     /**
      * Set the consumer for this client
+     *
      * @param string $consumerKey    the consumer key
      * @param string $consumerSecret the consumer secret
      */
@@ -35,6 +39,7 @@ class Client
 
     /**
      * Set the token for this client
+     *
      * @param string $token  the oauth token
      * @param string $secret the oauth secret
      */
@@ -45,6 +50,7 @@ class Client
 
     /**
      * Get info on the authenticating user
+     *
      * @return array the response array
      */
     public function getUserInfo()
@@ -54,6 +60,7 @@ class Client
 
     /**
      * Get user dashboard for the authenticating user
+     *
      * @param  array $options the options for the call
      * @return array the response array
      */
@@ -64,6 +71,7 @@ class Client
 
     /**
      * Get followings for the authenticating user
+     *
      * @param  array $options the options for the call
      * @return array the response array
      */
@@ -74,6 +82,7 @@ class Client
 
     /**
      * Get likes for the authenticating user
+     *
      * @param  array $options the options for the call
      * @return array the response array
      */
@@ -84,6 +93,7 @@ class Client
 
     /**
      * Follow a blog
+     *
      * @param  string $blogName the name of the blog to follow
      * @return array  the response array
      */
@@ -96,6 +106,7 @@ class Client
 
     /**
      * Unfollow a blog
+     *
      * @param  string $blogName the name of the blog to follow
      * @return array  the response array
      */
@@ -106,13 +117,14 @@ class Client
         return $this->postRequest('v2/user/unfollow', $options, false);
     }
 
-    /**
-     * Like a post
-     * @param  string $blogName  the name of the blog the post is on
-     * @param  int    $postId    the id of the post
-     * @param  string $reblogKey the reblog_key of the post
-     * @return array  the response array
-     */
+  /**
+   * Like a post
+   *
+   * @param  int     $postId    the id of the post
+   * @param  string  $reblogKey the reblog_key of the post
+   *
+   * @return array  the response array
+   */
     public function like($postId, $reblogKey)
     {
         $options = array('id' => $postId, 'reblog_key' => $reblogKey);
@@ -122,9 +134,10 @@ class Client
 
     /**
      * Unlike a post
-     * @param  string $blogName  the name of the blog the post is on
-     * @param  int    $postId    the id of the post
-     * @param  string $reblogKey the reblog_key of the post
+     *
+     * @param  int    $postId     the id of the post
+     * @param  string $reblogKey  the reblog_key of the post
+     *
      * @return array  the response array
      */
     public function unlike($postId, $reblogKey)
@@ -136,9 +149,11 @@ class Client
 
     /**
      * Delete a post
+     *
      * @param  string $blogName  the name of the blog the post is on
      * @param  int    $postId    the id of the post
      * @param  string $reblogKey the reblog_key of the post
+     *
      * @return array  the response array
      */
     public function deletePost($blogName, $postId, $reblogKey)
@@ -151,10 +166,12 @@ class Client
 
     /**
      * Reblog a post
+     *
      * @param  string $blogName  the name of the blog
      * @param  int    $postId    the id of the post
      * @param  string $reblogKey the reblog key of the post
      * @param  array  $options   the options for the call
+     *
      * @return array  the response array
      */
     public function reblogPost($blogName, $postId, $reblogKey, $options = null)
@@ -168,9 +185,11 @@ class Client
 
     /**
      * Edit a post
+     *
      * @param  string $blogName the name of the blog
      * @param  int    $postId   the id of the post to edit
      * @param  array  $data     the data to save
+     *
      * @return array  the response array
      */
     public function editPost($blogName, $postId, $data)
@@ -183,8 +202,10 @@ class Client
 
     /**
      * Create a post
+     *
      * @param  string $blogName the name of the blog
      * @param  array  $data     the data to save
+     *
      * @return array  the response array
      */
     public function createPost($blogName, $data)
@@ -196,8 +217,10 @@ class Client
 
     /**
      * Get tagged posts
+     *
      * @param  string $tag     the tag to look up
      * @param  array  $options the options for the call
+     *
      * @return array  the response array
      */
     public function getTaggedPosts($tag, $options = null)
@@ -212,6 +235,7 @@ class Client
 
     /**
      * Get information about a given blog
+     *
      * @param  string $blogName the name of the blog to look up
      * @return array  the response array
      */
@@ -224,8 +248,10 @@ class Client
 
     /**
      * Get blog avatar URL
+     *
      * @param  string $blogName the nae of the blog to look up
      * @param  int    $size     the size to retrieve
+     *
      * @return string the avatar url
      */
     public function getBlogAvatar($blogName, $size = null)
@@ -240,8 +266,10 @@ class Client
 
     /**
      * Get blog likes for a given blog
+     *
      * @param  string $blogName the name of the blog to look up
      * @param  array  $options  the options for the call
+     *
      * @return array  the response array
      */
     public function getBlogLikes($blogName, $options = null)
@@ -253,8 +281,10 @@ class Client
 
     /**
      * Get blog followers for a given blog
+     *
      * @param  string $blogName the name of the blog to look up
      * @param  array  $options  the options for the call
+     *
      * @return array  the response array
      */
     public function getBlogFollowers($blogName, $options = null)
@@ -266,8 +296,10 @@ class Client
 
     /**
      * Get posts for a given blog
+     *
      * @param  string $blogName the name of the blog
      * @param  array  $options  the options for the call
+     *
      * @return array  the response array
      */
     public function getBlogPosts($blogName, $options = null)
@@ -283,8 +315,10 @@ class Client
 
     /**
      * Get queue posts for a given blog
+     *
      * @param  string $blogName the name of the blog
      * @param  array  $options  the options for the call
+     *
      * @return array  the response array
      */
     public function getQueuedPosts($blogName, $options = null)
@@ -296,8 +330,10 @@ class Client
 
     /**
      * Get draft posts for a given blog
+     *
      * @param  string $blogName the name of the blog
      * @param  array  $options  the options for the call
+     *
      * @return array  the response array
      */
     public function getDraftPosts($blogName, $options = null)
@@ -309,8 +345,10 @@ class Client
 
     /**
      * Get submission posts for a given blog
+     *
      * @param  string $blogName the name of the blog
      * @param  array  $options  the options for the call
+     *
      * @return array  the response array
      */
     public function getSubmissionPosts($blogName, $options = null)
@@ -328,9 +366,11 @@ class Client
 
     /**
      * Make a GET request to the given endpoint and return the response
+     *
      * @param  string $path      the path to call on
      * @param  array  $options   the options to call with
      * @param  bool   $addApiKey whether or not to add the api key
+     *
      * @return array  the response object (parsed)
      */
     private function getRequest($path, $options, $addApiKey)
@@ -342,9 +382,11 @@ class Client
 
     /**
      * Make a POST request to the given endpoint and return the response
+     *
      * @param  string $path      the path to call on
      * @param  array  $options   the options to call with
      * @param  bool   $addApiKey whether or not to add the api key
+     *
      * @return array  the response object (parsed)
      */
     private function postRequest($path, $options, $addApiKey)
@@ -354,12 +396,14 @@ class Client
         return $this->parseResponse($response);
     }
 
-    /**
-     * Parse a response and return an appropriate result
-     * @param  object $response the response from the server
-     * @return array  the response data
-     * @throws an     error occurred
-     */
+  /**
+   * Parse a response and return an appropriate result
+   *
+   * @param  \stdClass $response the response from the server
+   *
+   * @throws RequestException
+   * @return array  the response data
+   */
     private function parseResponse($response)
     {
         $response->json = json_decode($response->body);
@@ -372,9 +416,11 @@ class Client
 
     /**
      * Make a GET request to the given endpoint and return the response
+     *
      * @param  string $path      the path to call on
      * @param  array  $options   the options to call with
      * @param  bool   $addApiKey whether or not to add the api key
+     *
      * @return string url redirected to (or null)
      */
     private function getRedirect($path, $options, $addApiKey)
@@ -389,11 +435,13 @@ class Client
 
     /**
      * Make a request to the given endpoint and return the response
+     *
      * @param  string $method    the method to call: GET, POST
      * @param  string $path      the path to call on
      * @param  array  $options   the options to call with
      * @param  bool   $addApiKey whether or not to add the api key
-     * @return string the response object (not parsed)
+     *
+     * @return \stdClass the response object (not parsed)
      */
     private function makeRequest($method, $path, $options, $addApiKey)
     {
@@ -407,11 +455,14 @@ class Client
         return $this->requestHandler->request($method, $path, $options);
     }
 
-    /**
-     * Expand the given blogName into a base path for the blog
-     * @param  string $blogName the name of the blog
-     * @return string the blog base path
-     */
+  /**
+   * Expand the given blogName into a base path for the blog
+   *
+   * @param  string $blogName the name of the blog
+   * @param  string $ext      the url extension
+   *
+   * @return string the blog base path
+   */
     private function blogPath($blogName, $ext)
     {
         $blogUrl = $this->blogUrl($blogName);
@@ -421,6 +472,7 @@ class Client
 
     /**
      * Get the URL of a blog by name or URL
+     *
      * @param  string $blogName the name of the blog
      * @return string the blog URL
      */
