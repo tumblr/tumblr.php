@@ -49,9 +49,9 @@ class RequestHandler
     /**
      * Make a request with this request handler
      *
-     * @param  string   $method  one of GET, POST
-     * @param  string   $path    the path to hit
-     * @param  array    $options the array of params
+     * @param string $method  one of GET, POST
+     * @param string $path    the path to hit
+     * @param array  $options the array of params
      *
      * @return \stdClass response object
      */

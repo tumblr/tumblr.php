@@ -135,10 +135,10 @@ class Client
     /**
      * Unlike a post
      *
-     * @param  int    $postId     the id of the post
-     * @param  string $reblogKey  the reblog_key of the post
+     * @param int    $postId    the id of the post
+     * @param string $reblogKey the reblog_key of the post
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function unlike($postId, $reblogKey)
     {
@@ -150,11 +150,11 @@ class Client
     /**
      * Delete a post
      *
-     * @param  string $blogName  the name of the blog the post is on
-     * @param  int    $postId    the id of the post
-     * @param  string $reblogKey the reblog_key of the post
+     * @param string $blogName  the name of the blog the post is on
+     * @param int    $postId    the id of the post
+     * @param string $reblogKey the reblog_key of the post
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function deletePost($blogName, $postId, $reblogKey)
     {
@@ -167,12 +167,12 @@ class Client
     /**
      * Reblog a post
      *
-     * @param  string $blogName  the name of the blog
-     * @param  int    $postId    the id of the post
-     * @param  string $reblogKey the reblog key of the post
-     * @param  array  $options   the options for the call
+     * @param string $blogName  the name of the blog
+     * @param int    $postId    the id of the post
+     * @param string $reblogKey the reblog key of the post
+     * @param array  $options   the options for the call
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function reblogPost($blogName, $postId, $reblogKey, $options = null)
     {
@@ -186,11 +186,11 @@ class Client
     /**
      * Edit a post
      *
-     * @param  string $blogName the name of the blog
-     * @param  int    $postId   the id of the post to edit
-     * @param  array  $data     the data to save
+     * @param string $blogName the name of the blog
+     * @param int    $postId   the id of the post to edit
+     * @param array  $data     the data to save
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function editPost($blogName, $postId, $data)
     {
@@ -203,10 +203,10 @@ class Client
     /**
      * Create a post
      *
-     * @param  string $blogName the name of the blog
-     * @param  array  $data     the data to save
+     * @param string $blogName the name of the blog
+     * @param array  $data     the data to save
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function createPost($blogName, $data)
     {
@@ -218,10 +218,10 @@ class Client
     /**
      * Get tagged posts
      *
-     * @param  string $tag     the tag to look up
-     * @param  array  $options the options for the call
+     * @param string $tag     the tag to look up
+     * @param array  $options the options for the call
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function getTaggedPosts($tag, $options = null)
     {
@@ -249,8 +249,8 @@ class Client
     /**
      * Get blog avatar URL
      *
-     * @param  string $blogName the nae of the blog to look up
-     * @param  int    $size     the size to retrieve
+     * @param string $blogName the nae of the blog to look up
+     * @param int    $size     the size to retrieve
      *
      * @return string the avatar url
      */
@@ -267,10 +267,10 @@ class Client
     /**
      * Get blog likes for a given blog
      *
-     * @param  string $blogName the name of the blog to look up
-     * @param  array  $options  the options for the call
+     * @param string $blogName the name of the blog to look up
+     * @param array  $options  the options for the call
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function getBlogLikes($blogName, $options = null)
     {
@@ -282,10 +282,10 @@ class Client
     /**
      * Get blog followers for a given blog
      *
-     * @param  string $blogName the name of the blog to look up
-     * @param  array  $options  the options for the call
+     * @param string $blogName the name of the blog to look up
+     * @param array  $options  the options for the call
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function getBlogFollowers($blogName, $options = null)
     {
@@ -297,10 +297,10 @@ class Client
     /**
      * Get posts for a given blog
      *
-     * @param  string $blogName the name of the blog
-     * @param  array  $options  the options for the call
+     * @param string $blogName the name of the blog
+     * @param array  $options  the options for the call
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function getBlogPosts($blogName, $options = null)
     {
@@ -316,10 +316,10 @@ class Client
     /**
      * Get queue posts for a given blog
      *
-     * @param  string $blogName the name of the blog
-     * @param  array  $options  the options for the call
+     * @param string $blogName the name of the blog
+     * @param array  $options  the options for the call
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function getQueuedPosts($blogName, $options = null)
     {
@@ -331,10 +331,10 @@ class Client
     /**
      * Get draft posts for a given blog
      *
-     * @param  string $blogName the name of the blog
-     * @param  array  $options  the options for the call
+     * @param string $blogName the name of the blog
+     * @param array  $options  the options for the call
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function getDraftPosts($blogName, $options = null)
     {
@@ -346,10 +346,10 @@ class Client
     /**
      * Get submission posts for a given blog
      *
-     * @param  string $blogName the name of the blog
-     * @param  array  $options  the options for the call
+     * @param string $blogName the name of the blog
+     * @param array  $options  the options for the call
      *
-     * @return array  the response array
+     * @return array the response array
      */
     public function getSubmissionPosts($blogName, $options = null)
     {
@@ -367,11 +367,11 @@ class Client
     /**
      * Make a GET request to the given endpoint and return the response
      *
-     * @param  string $path      the path to call on
-     * @param  array  $options   the options to call with
-     * @param  bool   $addApiKey whether or not to add the api key
+     * @param string $path      the path to call on
+     * @param array  $options   the options to call with
+     * @param bool   $addApiKey whether or not to add the api key
      *
-     * @return array  the response object (parsed)
+     * @return array the response object (parsed)
      */
     private function getRequest($path, $options, $addApiKey)
     {
@@ -383,11 +383,11 @@ class Client
     /**
      * Make a POST request to the given endpoint and return the response
      *
-     * @param  string $path      the path to call on
-     * @param  array  $options   the options to call with
-     * @param  bool   $addApiKey whether or not to add the api key
+     * @param string $path      the path to call on
+     * @param array  $options   the options to call with
+     * @param bool   $addApiKey whether or not to add the api key
      *
-     * @return array  the response object (parsed)
+     * @return array the response object (parsed)
      */
     private function postRequest($path, $options, $addApiKey)
     {
@@ -417,9 +417,9 @@ class Client
     /**
      * Make a GET request to the given endpoint and return the response
      *
-     * @param  string $path      the path to call on
-     * @param  array  $options   the options to call with
-     * @param  bool   $addApiKey whether or not to add the api key
+     * @param string $path      the path to call on
+     * @param array  $options   the options to call with
+     * @param bool   $addApiKey whether or not to add the api key
      *
      * @return string url redirected to (or null)
      */
@@ -436,10 +436,10 @@ class Client
     /**
      * Make a request to the given endpoint and return the response
      *
-     * @param  string $method    the method to call: GET, POST
-     * @param  string $path      the path to call on
-     * @param  array  $options   the options to call with
-     * @param  bool   $addApiKey whether or not to add the api key
+     * @param string $method    the method to call: GET, POST
+     * @param string $path      the path to call on
+     * @param array  $options   the options to call with
+     * @param bool   $addApiKey whether or not to add the api key
      *
      * @return \stdClass the response object (not parsed)
      */
