@@ -18,14 +18,13 @@ class TumblrTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($response));
 
         // Create a new client and set it up to use that request handler
-        $client = new Tumblr\API\Client;
+        $client = new Tumblr\API\Client(API_KEY);
         $ref = new ReflectionObject($client);
         $prop = $ref->getProperty('requestHandler');
         $prop->setAccessible(true);
         $prop->setValue($client, $request);
 
-        // Give it an API key
-        $client->setConsumer(API_KEY, null);
+        // Give it tokens
         $client->setToken('t1', 't2');
 
         // And then run the callback to check the results
