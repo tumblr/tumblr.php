@@ -43,17 +43,17 @@ $client->unlike($postId, $reblogKey);
 ### Blog Methods
 
 ``` php
-$client->blogInfo($blogName);
+$client->getBlogInfo($blogName);
 
-$client->blogAvatar($blogName, $size = null);
+$client->getBlogAvatar($blogName, $size = null);
 
-$client->blogPosts($blogName, $options = null);
-$client->blogLikes($blogName, $options = null);
-$client->blogFollowers($blogName, $options = null);
+$client->getBlogPosts($blogName, $options = null);
+$client->getBlogLikes($blogName, $options = null);
+$client->getBlogFollowers($blogName, $options = null);
 
-$client->blogQueuedPosts($blogName, $options = null);
-$client->blogDraftPosts($blogName, $options = null);
-$client->blogSubmissionPosts($blogName, $options = null);
+$client->getQueuedPosts($blogName, $options = null);
+$client->getDraftPosts($blogName, $options = null);
+$client->getSubmissionPosts($blogName, $options = null);
 ```
 
 ### Post Methods
