@@ -52,6 +52,16 @@ class Client
     }
 
     /**
+     * Retrieve RequestHandler instance
+     *
+     * @return RequestHandler
+     */
+    public function getRequestHandler()
+    {
+        return $this->requestHandler;
+    }
+
+    /**
      * Get info on the authenticating user
      *
      * @return array the response array
