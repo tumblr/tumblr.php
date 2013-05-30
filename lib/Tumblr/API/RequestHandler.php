@@ -58,7 +58,7 @@ class RequestHandler
     public function request($method, $path, $options)
     {
         // Ensure we have options
-        $options ?: array();
+        $options = $options ?: array();
 
         // Take off the data param, we'll add it back after signing
         $file = isset($options['data']) ? $options['data'] : false;
@@ -77,14 +77,14 @@ class RequestHandler
 
         if ($method === 'GET') {
             // GET requests get the params in the query string
-            $request = $this->client->get($url, null);
-            $request->addHeader('Authorization', $authString);
+            $request = $this->client->get($url);
+            $request->setHeader('Authorization', $authString);
             $request->getQuery()->merge($options);
         } else {
             // POST requests get the params in the body, with the files added
             // and as multipart if appropriate
             $request = $this->client->post($url, null, $options);
-            $request->addHeader('Authorization', $authString);
+            $request->setHeader('Authorization', $authString);
             if ($file) {
                 $request->addPostFiles(array('data' => $file));
             }
@@ -102,7 +102,7 @@ class RequestHandler
         $obj = new \stdClass;
         $obj->status = $response->getStatusCode();
         $obj->body = $response->getBody();
-        $obj->headers = $response->getHeaders();
+        $obj->headers = $response->getHeaders()->toArray();
 
         return $obj;
     }
