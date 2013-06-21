@@ -65,7 +65,11 @@ class RequestHandler
         unset($options['data']);
 
         // Get the oauth signature to put in the request header
-        $url = "http://api.tumblr.com/$path";
+        if (strpos($path, 'https://') === 0 || strpos($path, 'http://') === 0) {
+            $url = $path;
+        } else {
+            $url = "http://api.tumblr.com/$path";
+        }
         $oauth = \Eher\OAuth\Request::from_consumer_and_token(
             $this->consumer, $this->token,
             $method, $url, $options
