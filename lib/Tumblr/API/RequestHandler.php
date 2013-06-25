@@ -13,11 +13,15 @@ class RequestHandler
     private $token;
     private $signatureMethod;
 
+    private $baseUrl;
+
     /**
      * Instantiate a new RequestHandler
      */
     public function __construct()
     {
+        $this->baseUrl = 'http://api.tumblr.com/';
+
         $this->signatureMethod = new \Eher\OAuth\HmacSha1();
         $this->client = new \Guzzle\Http\Client(null, array(
             'redirect.disable' => true
@@ -47,6 +51,31 @@ class RequestHandler
     }
 
     /**
+     * Set the base url for this request handler.
+     *
+     * @param string $url The base url (e.g. http://api.tumblr.com)
+     */
+    public function setBaseUrl($url)
+    {
+        // Ensure we have a trailing slash since it is expected in {@link request}.
+        if (substr($url, -1) !== '/') {
+            $url .= '/';
+        }
+
+        $this->baseUrl = $url;
+    }
+
+    /**
+     * Return the base url for this request handler.
+     *
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        return $this->baseUrl;
+    }
+
+    /**
      * Make a request with this request handler
      *
      * @param string $method  one of GET, POST
@@ -65,7 +94,7 @@ class RequestHandler
         unset($options['data']);
 
         // Get the oauth signature to put in the request header
-        $url = "http://api.tumblr.com/$path";
+        $url = $this->baseUrl . $path;
         $oauth = \Eher\OAuth\Request::from_consumer_and_token(
             $this->consumer, $this->token,
             $method, $url, $options
