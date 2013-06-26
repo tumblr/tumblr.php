@@ -66,16 +66,6 @@ class RequestHandler
     }
 
     /**
-     * Return the base url for this request handler.
-     *
-     * @return string
-     */
-    public function getBaseUrl()
-    {
-        return $this->baseUrl;
-    }
-
-    /**
      * Make a request with this request handler
      *
      * @param string $method  one of GET, POST
