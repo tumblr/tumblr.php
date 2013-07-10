@@ -76,7 +76,7 @@ $client->getTaggedPosts($tag, $options = null);
 tumblr.php is available
 [on composer](https://packagist.org/packages/tumblr/tumblr)
 
-* guzzle/guzzle 3.1.x
+* guzzle/guzzle >=3.1.x,<4 
 * eher/oauth 1.0.x
 
 If you're using composer (you should!) you can just run
