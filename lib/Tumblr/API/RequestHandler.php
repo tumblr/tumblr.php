@@ -77,7 +77,7 @@ class RequestHandler
     public function request($method, $path, $options)
     {
         // Ensure we have options
-        $options ?: array();
+        $options = $options ?: array();
 
         // Take off the data param, we'll add it back after signing
         $file = isset($options['data']) ? $options['data'] : false;
