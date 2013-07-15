@@ -121,7 +121,7 @@ class RequestHandler
         $obj = new \stdClass;
         $obj->status = $response->getStatusCode();
         $obj->body = $response->getBody();
-        $obj->headers = $response->getHeaders();
+        $obj->headers = $response->getHeaders()->toArray();
 
         return $obj;
     }

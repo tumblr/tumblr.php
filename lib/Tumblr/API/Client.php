@@ -440,7 +440,7 @@ class Client
     {
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
         if ($response->status === 301) {
-            return (string) $response->headers['Location'];
+            return $response->headers['Location'][0];
         }
 
         return null;
