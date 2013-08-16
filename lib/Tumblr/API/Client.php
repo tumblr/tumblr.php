@@ -371,12 +371,6 @@ class Client
         return $this->getRequest($path, $options, false);
     }
 
-    /*
-     ************
-     ************
-     ************
-     */
-
     /**
      * Make a GET request to the given endpoint and return the response
      *
