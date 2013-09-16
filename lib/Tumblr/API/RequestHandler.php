@@ -110,7 +110,6 @@ class RequestHandler
                     foreach ($file as $idx => $f) {
                         $collection["data[$idx]"] = $f;
                     }
-                    var_dump($collection);
                     $request->addPostFiles($collection);
                 } else {
                     $request->addPostFiles(array('data' => $file));
