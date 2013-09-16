@@ -105,7 +105,16 @@ class RequestHandler
             $request = $this->client->post($url, null, $options);
             $request->addHeader('Authorization', $authString);
             if ($file) {
-                $request->addPostFiles(array('data' => $file));
+                if (is_array($file)) {
+                    $collection = array();
+                    foreach ($file as $idx => $f) {
+                        $collection["data[$idx]"] = $f;
+                    }
+                    var_dump($collection);
+                    $request->addPostFiles($collection);
+                } else {
+                    $request->addPostFiles(array('data' => $file));
+                }
             }
         }
 
