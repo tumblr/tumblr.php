@@ -19,6 +19,12 @@ class PostTest extends TumblrTest
             // create post
             array(function ($c) { $c->createPost('b.n', array('d' => 'ata')); }, 'POST', 'v2/blog/b.n/post', array('d' => 'ata')),
 
+            // single source
+            array(function ($c) { $c->createPost('b.n', array('source' => 'remote')); }, 'POST', 'v2/blog/b.n/post', array('source' => 'remote')),
+
+            // multi-source
+            array(function ($c) { $c->createPost('b.n', array('source' => array('r1', 'r2'))); }, 'POST', 'v2/blog/b.n/post', array('source[0]' => 'r1', 'source[1]' => 'r2')),
+
         );
     }
 }

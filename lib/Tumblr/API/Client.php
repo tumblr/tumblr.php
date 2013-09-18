@@ -404,8 +404,15 @@ class Client
      */
     private function postRequest($path, $options, $addApiKey)
     {
-        $response = $this->makeRequest('POST', $path, $options, $addApiKey);
+        if (isset($options['source']) && is_array($options['source'])) {
+            $sources = $options['source'];
+            unset($options['source']);
+            foreach ($sources as $i => $source) {
+                $options["source[$i]"] = $source;
+            }
+        }
 
+        $response = $this->makeRequest('POST', $path, $options, $addApiKey);
         return $this->parseResponse($response);
     }
 
