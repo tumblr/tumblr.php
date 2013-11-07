@@ -86,8 +86,11 @@ class RequestHandler
         // Get the oauth signature to put in the request header
         $url = $this->baseUrl . $path;
         $oauth = \Eher\OAuth\Request::from_consumer_and_token(
-            $this->consumer, $this->token,
-            $method, $url, $options
+            $this->consumer,
+            $this->token,
+            $method,
+            $url,
+            $options
         );
         $oauth->sign_request($this->signatureMethod, $this->consumer, $this->token);
         $authHeader = $oauth->to_header();
