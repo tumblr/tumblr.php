@@ -11,7 +11,16 @@ class RequestException extends \Exception
     public function __construct($response)
     {
         $error = json_decode($response->body);
-        $errstr = isset($error->meta) ? $error->meta->msg : 'Unknown Error';
+        $errstr = 'Unknown Error';
+        if(isset($error->meta)){
+            $errstr = $error->meta->msg;
+            if(isset($error->response->errors)){
+                $errstr .= ' ('.$error->response->errors[0].')';
+            }
+        }
+        elseif(isset($error->response->errors)){
+            $errstr = $error->response->errors[0];
+        }
 
         $this->statusCode = $response->status;
         $this->message = $errstr;
