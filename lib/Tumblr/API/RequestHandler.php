@@ -20,7 +20,7 @@ class RequestHandler
      */
     public function __construct()
     {
-        $this->baseUrl = 'http://api.tumblr.com/';
+        $this->baseUrl = 'https://api.tumblr.com/';
 
         $this->signatureMethod = new \Eher\OAuth\HmacSha1();
         $this->client = new \Guzzle\Http\Client(null, array(
@@ -53,7 +53,7 @@ class RequestHandler
     /**
      * Set the base url for this request handler.
      *
-     * @param string $url The base url (e.g. http://api.tumblr.com)
+     * @param string $url The base url (e.g. https://api.tumblr.com)
      */
     public function setBaseUrl($url)
     {
