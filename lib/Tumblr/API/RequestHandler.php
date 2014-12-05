@@ -122,7 +122,7 @@ class RequestHandler
             }
         }
 
-        $request->addHeader('User-Agent', 'tumblr.php/'.$this->version);
+        $request->setHeader('User-Agent', 'tumblr.php/'.$this->version);
 
         // Guzzle throws errors, but we collapse them and just grab the
         // response, since we deal with this at the \Tumblr\Client level
