@@ -21,7 +21,7 @@ class RequestHandler
      */
     public function __construct()
     {
-        $this->baseUrl = 'http://api.tumblr.com/';
+        $this->baseUrl = 'https://api.tumblr.com/';
         $this->version = '0.1.2';
 
         $this->signatureMethod = new \Eher\OAuth\HmacSha1();
@@ -55,7 +55,7 @@ class RequestHandler
     /**
      * Set the base url for this request handler.
      *
-     * @param string $url The base url (e.g. http://api.tumblr.com)
+     * @param string $url The base url (e.g. https://api.tumblr.com)
      */
     public function setBaseUrl($url)
     {
