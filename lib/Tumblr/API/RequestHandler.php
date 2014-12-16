@@ -14,6 +14,7 @@ class RequestHandler
     private $signatureMethod;
 
     private $baseUrl;
+    private $version;
 
     /**
      * Instantiate a new RequestHandler
@@ -21,6 +22,7 @@ class RequestHandler
     public function __construct()
     {
         $this->baseUrl = 'https://api.tumblr.com/';
+        $this->version = '0.1.2';
 
         $this->signatureMethod = new \Eher\OAuth\HmacSha1();
         $this->client = new \Guzzle\Http\Client(null, array(
@@ -119,6 +121,8 @@ class RequestHandler
                 }
             }
         }
+
+        $request->setHeader('User-Agent', 'tumblr.php/'.$this->version);
 
         // Guzzle throws errors, but we collapse them and just grab the
         // response, since we deal with this at the \Tumblr\Client level
