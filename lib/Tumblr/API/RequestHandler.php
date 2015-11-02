@@ -25,8 +25,8 @@ class RequestHandler
         $this->version = '0.1.2';
 
         $this->signatureMethod = new \Eher\OAuth\HmacSha1();
-        $this->client = new \Guzzle\Http\Client(null, array(
-            'redirect.disable' => true
+        $this->client = new \GuzzleHttp\Client(array(
+            'allow_redirects' => false,
         ));
     }
 
@@ -99,44 +99,51 @@ class RequestHandler
         $pieces = explode(' ', $authHeader, 2);
         $authString = $pieces[1];
 
+
+        // Set up the request and get the response
+        $uri = new \GuzzleHttp\Psr7\Uri($url);
+        $guzzleOptions = [
+            'headers' => [
+                'Authorization' => $authString,
+                'User-Agent' => 'tumblr.php/' . $this->version,
+            ],
+            // Swallow exceptions since \Tumblr\API\Client will handle them
+            'http_errors' => false,
+        ];
         if ($method === 'GET') {
-            // GET requests get the params in the query string
-            $request = $this->client->get($url, null);
-            $request->addHeader('Authorization', $authString);
-            $request->getQuery()->merge($options);
-        } else {
-            // POST requests get the params in the body, with the files added
-            // and as multipart if appropriate
-            $request = $this->client->post($url, null, $options);
-            $request->addHeader('Authorization', $authString);
-            if ($file) {
-                if (is_array($file)) {
-                    $collection = array();
-                    foreach ($file as $idx => $f) {
-                        $collection["data[$idx]"] = $f;
-                    }
-                    $request->addPostFiles($collection);
-                } else {
-                    $request->addPostFiles(array('data' => $file));
+            $uri = $uri->withQuery(http_build_query($options));
+        } elseif ($method === 'POST') {
+            if (!$file) {
+                $guzzleOptions['form_params'] = $options;
+            } else {
+                // Add the files back now that we have the signature without them
+                $content_type = 'multipart';
+                $form = [];
+                foreach ($options as $name => $contents) {
+                    $form[] = [
+                        'name'      => $name,
+                        'contents'  => $contents,
+                    ];
                 }
+                foreach ((array) $file as $idx => $path) {
+                    $form[] = [
+                        'name'      => "data[$idx]",
+                        'contents'  => file_get_contents($path),
+                        'filename'  => pathinfo($path, PATHINFO_FILENAME),
+                    ];
+                }
+                $guzzleOptions['multipart'] = $form;
             }
         }
 
-        $request->setHeader('User-Agent', 'tumblr.php/'.$this->version);
-
-        // Guzzle throws errors, but we collapse them and just grab the
-        // response, since we deal with this at the \Tumblr\Client level
-        try {
-            $response = $request->send();
-        } catch (\Guzzle\Http\Exception\BadResponseException $e) {
-            $response = $request->getResponse();
-        }
+        $response = $this->client->request($method, $uri, $guzzleOptions);
 
         // Construct the object that the Client expects to see, and return it
         $obj = new \stdClass;
         $obj->status = $response->getStatusCode();
-        $obj->body = $response->getBody();
-        $obj->headers = $response->getHeaders()->toArray();
+        // Turn the stream into a string
+        $obj->body = $response->getBody()->__toString();
+        $obj->headers = $response->getHeaders();
 
         return $obj;
     }

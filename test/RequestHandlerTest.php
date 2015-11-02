@@ -2,43 +2,6 @@
 
 class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
-        $headers = $this->getMock('Guzzle\Http\Message\Header\HeaderCollection',
-                                  array('setHeaders', 'getHeaders', 'toArray'),
-                                  array());
-        $headers->expects($this->any())
-                ->method('getHeaders')
-                ->will($this->returnValue(42));
-
-        $headers->expects($this->any())
-                ->method('toArray')
-                ->will($this->returnValue(array()));
-
-        $response = $this->getMock('Guzzle\Http\Message\Response',
-                                   array('getStatusCode'),
-                                   array(200, $headers));
-
-        $response->expects($this->any())
-                 ->method('getHeaders')
-                 ->will($this->returnValue($headers));
-
-        $request = $this->getMock('Guzzle\Http\Message\EntityEnclosingRequest',
-                                  array('send', 'getResponse', 'addPostFiles'),
-                                  array('post', 'foo'));
-        $request->expects($this->any())
-                ->method('send')
-                ->will($this->throwException(new \Guzzle\Http\Exception\BadResponseException));
-        $request->expects($this->any())
-                ->method('getResponse')
-                ->will($this->returnValue($response));
-
-        $this->guzzle = $this->getMock('\Guzzle\Http\Client', array('post'));
-        $this->guzzle->expects($this->any())
-                     ->method('post')
-                     ->will($this->returnValue($request));
-    }
-
     public function testBaseUrlHasTrailingSlash()
     {
         $client = new Tumblr\API\Client(API_KEY);
@@ -53,7 +16,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
      /**
-     * @expectedException Guzzle\Http\Exception\CurlException
+     * @expectedException GuzzleHttp\Exception\ConnectException
      */
     public function testRequestThrowsErrorOnMalformedBaseUrl()
     {
@@ -67,22 +30,59 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testRequestPost()
+    /**
+     * @expectedException Tumblr\API\RequestException
+     */
+    public function testRequestThrowsOnBadResponse()
     {
+        // Response stream
+        $stream = fopen('php://memory','r+');
+        fwrite($stream, '{"meta": {"status": 400, "msg": "Sadface."} }');
+        rewind($stream);
+
+        // Hook up response to all requests
+        $response = (new GuzzleHttp\Psr7\Response)
+            ->withStatus(400, 'Bad Request')
+            ->withBody(new GuzzleHttp\Psr7\Stream($stream));
+
+        $this->guzzle = $this->getMock('\GuzzleHttp\Client', array('request'));
+        $this->guzzle->expects($this->any())
+                     ->method('request')
+                     ->will($this->returnValue($response));
+
+        // Attached mocked guzzle client
         $client = new Tumblr\API\Client(API_KEY);
         $rh = $client->getRequestHandler();
-
         $rh->client = $this->guzzle;
 
-        $rh->setBaseUrl('/');
+        // Throws because it got a 400 back
+        $client->getBlogInfo('ceyko.tumblr.com');
+    }
 
-        // Test with one file
-        $options = array('data' => 'fake data');
-        $rh->request('POST', 'meh', $options);
+    public function testRequestGetsJsonResponseField()
+    {
+        // Response stream
+        $stream = fopen('php://memory','r+');
+        fwrite($stream, '{"meta": {"status": 200, "msg": "OK"}, "response": "Response Text"}');
+        rewind($stream);
 
-        // Test with array of files
-        $options = array('data' => array('foo', 'bar'));
-        $rh->request('POST', 'meh', $options);
+        // Hook up response to all requests
+        $response = (new GuzzleHttp\Psr7\Response)
+            ->withStatus(200, 'OK')
+            ->withBody(new GuzzleHttp\Psr7\Stream($stream));
+
+        $this->guzzle = $this->getMock('\GuzzleHttp\Client', array('request'));
+        $this->guzzle->expects($this->any())
+                     ->method('request')
+                     ->will($this->returnValue($response));
+
+        // Attached mocked guzzle client
+        $client = new Tumblr\API\Client(API_KEY);
+        $rh = $client->getRequestHandler();
+        $rh->client = $this->guzzle;
+
+        // Parses out the `reponse` field in json on success
+        $this->assertEquals($client->getBlogInfo('ceyko.tumblr.com'), 'Response Text');
     }
 
 }
