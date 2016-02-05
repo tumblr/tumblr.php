@@ -26,7 +26,7 @@ The OAuth level is a little more complex, because it gives more access to user a
 
 - Guarantee that your application credentials are valid
 - Tell which page should the user return to
-- Redirect user to the Tubmlr authorization page
+- Redirect user to the Tumblr authorization page
 
 For this, let's consider you are coding the page `https://example.com/auth/tumblr`. You should configure your client with your application credentials, provided by [OAuth](https://www.tumblr.com/oauth/apps)
 ``` php
