@@ -9,12 +9,12 @@ The official PHP client for the
 
 ### Authentication
 
-On client, you can use two authentication levels:
+This client allows you to use one of these authentication levels:
 
 - API key
 - OAuth
 
-With the API key, the simplest one, you just need to set the client with you Consumer Key, provided by [Tumblr API](https://www.tumblr.com/oauth/apps), like this
+Using API key, the simplest one, you just need to set the client with you Consumer Key, provided by [Tumblr API](https://www.tumblr.com/oauth/apps), like this
 ``` php
 $client = new Tumblr\API\Client($consumerKey);
 ```
@@ -22,13 +22,13 @@ for use methods which are accessible from the API key. E.g.
 ``` php
 $client->getBlogInfo($blogName);
 ```
-The OAuth level is a little more complex, because it gives more access to user account. You need tokens which are provided only by user authorization. To obtain these tokens, first you need:
+The OAuth level is a little more complex, because it gives more access to user account. You need tokens which are provided only by user authorization. To obtain these tokens, first you need to:
 
 - Guarantee that your application credentials are valid
 - Tell which page should the user return to
 - Redirect user to the Tumblr authorization page
 
-For this, let's consider you are coding the page `https://example.com/auth/tumblr`. You should configure your client with your application credentials, provided by [OAuth](https://www.tumblr.com/oauth/apps)
+So let's consider you are coding the page `https://example.com/auth/tumblr`. You must configure your client with your application credentials, provided by [OAuth](https://www.tumblr.com/oauth/apps)
 ``` php
 $client = new Tumblr\API\Client($consumerKey, $consumerSecret);
 ```
@@ -37,13 +37,13 @@ Point the request handler to Tumblr
 $requestHandler = $client->getRequestHandler();
 $requestHandler->setBaseUrl('https://www.tumblr.com/');
 ```
-And send the request to Tumblr with your callback URL. Let's consider it would be `https://example.com/auth/tumblr/callback`.
+And then send the request to Tumblr with your callback URL. Let's consider it would be `https://example.com/auth/tumblr/callback`.
 ``` php
 $response = $requestHandler->request('POST', 'oauth/request_token', [
     'oauth_callback' => 'https://example.com/auth/tumblr/callback'
 ]);
 ```
-If your credentials are valid, you will receive temporary tokens to continue. You can extract them this way
+If your credentials are valid, you should receive temporary tokens to continue. You may extract them this way
 ``` php
 parse_str((string) $response->body, $tokens);
 ```
@@ -51,9 +51,9 @@ parse_str((string) $response->body, $tokens);
 ``` php
 ['oauth_token' => '...', 'oauth_token_secret' => '...']
 ```
-Save these tokens somehow (e.g. using `$_SESSION`), because we will need them in the next session. After this, the user should be redirected to the URL `https://www.tumblr.com/oauth/authorize?oauth_token={$tokens['oauth_token']}`.
+Save these tokens somehow (e.g. using `$_SESSION`), because we're going to use them in the next session. Now, the user must be redirected to URL `https://www.tumblr.com/oauth/authorize?oauth_token={$tokens['oauth_token']}`.
 
-Now, the user will decide if authorizes your application and then will be redirected to your callback page with 'get' param `oauth_verifier`. Now let's consider you're coding the page `https://example.com/auth/tumblr/callback`. One more time you should set the client with your application credentials and termporary tokens stored in the last session.
+Now, the user should decide if authorizes your application and then should be redirected to your callback page with 'get' param `oauth_verifier`. Now let's consider you're coding the page `https://example.com/auth/tumblr/callback`. One more time you should set the client with your application credentials and termporary tokens stored in the last session.
 ``` php
 $client = new Tumblr\API\Client($consumerKey, $consumerSecret, $oauthToken, $oauthTokenSecret);
 ```
@@ -70,7 +70,7 @@ $response = $requestHandler->request('POST', 'oauth/access_token', [
 ```
 You can also use the variable `$_GET` to recover `$oauthVerifier`.
 
-If everything runs correctly, you will receive the definitive tokens, which can be extracted this way
+If everything runs correctly, you should receive the definitive tokens, which may be extracted this way
 ``` php
 parse_str((string) $response->body, $tokens);
 ```
