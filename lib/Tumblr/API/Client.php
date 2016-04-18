@@ -380,7 +380,7 @@ class Client
      *
      * @return array the response object (parsed)
      */
-    private function getRequest($path, $options, $addApiKey)
+    public function getRequest($path, $options, $addApiKey)
     {
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
 
@@ -396,7 +396,7 @@ class Client
      *
      * @return array the response object (parsed)
      */
-    private function postRequest($path, $options, $addApiKey)
+    public function postRequest($path, $options, $addApiKey)
     {
         if (isset($options['source']) && is_array($options['source'])) {
             $sources = $options['source'];
