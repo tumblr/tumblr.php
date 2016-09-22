@@ -1,6 +1,6 @@
 # tumblr.php
 
-[![Build Status](https://secure.travis-ci.org/tumblr/tumblr.php.png)](http://travis-ci.org/tumblr/tumblr.php)
+[![Build Status](https://secure.travis-ci.org/tumblr/tumblr.php.svg)](http://travis-ci.org/tumblr/tumblr.php)
 
 The official PHP client for the
 [Tumblr API](http://www.tumblr.com/docs/en/api/v2).
