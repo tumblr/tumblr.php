@@ -32,28 +32,21 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException Tumblr\API\RequestException
+     * @expectedExceptionCode 400
+     * @expectedExceptionMessage Sadface
      */
     public function testRequestThrowsOnBadResponse()
     {
-        // Response stream
-        $stream = fopen('php://memory','r+');
-        fwrite($stream, '{"meta": {"status": 400, "msg": "Sadface."} }');
-        rewind($stream);
-
-        // Hook up response to all requests
-        $response = (new GuzzleHttp\Psr7\Response)
-            ->withStatus(400, 'Bad Request')
-            ->withBody(new GuzzleHttp\Psr7\Stream($stream));
-
-        $this->guzzle = $this->getMock('\GuzzleHttp\Client', array('request'));
-        $this->guzzle->expects($this->any())
-                     ->method('request')
-                     ->will($this->returnValue($response));
+        // Setup mock handler and response
+        $mock = new GuzzleHttp\Handler\MockHandler([
+            new GuzzleHttp\Psr7\Response(400, [], '{"meta": {"status": 400, "msg": "Sadface"} }'),
+        ]);
+        $stack = GuzzleHttp\HandlerStack::create($mock);
+        $guzzle = new GuzzleHttp\Client(['handler' => $stack]);
 
         // Attached mocked guzzle client
         $client = new Tumblr\API\Client(API_KEY);
-        $rh = $client->getRequestHandler();
-        $rh->client = $this->guzzle;
+        $client->getRequestHandler()->client = $guzzle;
 
         // Throws because it got a 400 back
         $client->getBlogInfo('ceyko.tumblr.com');
@@ -61,28 +54,18 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testRequestGetsJsonResponseField()
     {
-        // Response stream
-        $stream = fopen('php://memory','r+');
-        fwrite($stream, '{"meta": {"status": 200, "msg": "OK"}, "response": "Response Text"}');
-        rewind($stream);
-
-        // Hook up response to all requests
-        $response = (new GuzzleHttp\Psr7\Response)
-            ->withStatus(200, 'OK')
-            ->withBody(new GuzzleHttp\Psr7\Stream($stream));
-
-        $this->guzzle = $this->getMock('\GuzzleHttp\Client', array('request'));
-        $this->guzzle->expects($this->any())
-                     ->method('request')
-                     ->will($this->returnValue($response));
+        // Setup mock handler and response
+        $mock = new GuzzleHttp\Handler\MockHandler([
+            new GuzzleHttp\Psr7\Response(200, [], '{"meta": {"status": 200, "msg": "OK"}, "response": "Response Text"}'),
+        ]);
+        $stack = GuzzleHttp\HandlerStack::create($mock);
+        $guzzle = new GuzzleHttp\Client(['handler' => $stack]);
 
         // Attached mocked guzzle client
         $client = new Tumblr\API\Client(API_KEY);
-        $rh = $client->getRequestHandler();
-        $rh->client = $this->guzzle;
+        $client->getRequestHandler()->client = $guzzle;
 
         // Parses out the `reponse` field in json on success
         $this->assertEquals($client->getBlogInfo('ceyko.tumblr.com'), 'Response Text');
     }
-
 }
