@@ -16,7 +16,11 @@ class RequestException extends \Exception
         if (isset($error->meta)) {
             $errstr = $error->meta->msg;
             if (isset($error->response->errors)) {
-                $errstr .= ' ('.$error->response->errors[0].')';
+                if (is_array($error->response->errors) && count($error->response->errors)) {
+                    $errstr .= ' ('.$error->response->errors[0].')';
+                } else {
+                    $errstr .= ' ('.$error->response->errors.')';
+                }                
             }
         } elseif (isset($error->response->errors)) {
             $errstr = $error->response->errors[0];
