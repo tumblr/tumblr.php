@@ -18,8 +18,8 @@ class RequestException extends \Exception
             if (isset($error->response->errors)) {
                 if (is_array($error->response->errors) && count($error->response->errors)) {
                     $errstr .= ' ('.$error->response->errors[0].')';
-                } else {
-                    $errstr .= ' ('.$error->response->errors.')';
+                } else if (is_object($error->response->errors) && property_exists($error->response->errors, 'state') {
+                    $errstr .= ' ('.$error->response->errors->state.')';
                 }                
             }
         } elseif (isset($error->response->errors)) {
