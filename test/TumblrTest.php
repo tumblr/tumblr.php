@@ -11,7 +11,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase
         $response = $this->getResponseMock($which_mock);
 
         // Create request mock and set it to check for the proper response
-        $request = $this->getMock('Tumblr\API\RequestHandler', array('request'));
+        $request = PHPUnit_Framework_TestCase::createMock('Tumblr\API\RequestHandler', array('request'));
         $request->expects($this->once())
             ->method('request')
             ->with($this->equalTo($type), $this->equalTo($path), $this->equalTo($params))

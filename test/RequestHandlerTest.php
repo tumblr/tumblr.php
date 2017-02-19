@@ -4,18 +4,15 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $headers = $this->getMock('Guzzle\Http\Message\Header\HeaderCollection',
-                                  array('setHeaders', 'getHeaders', 'toArray'),
+        $headers = PHPUnit_Framework_TestCase::createMock('Guzzle\Http\Message\Header\HeaderCollection',
+                                  array('toArray'),
                                   array());
-        $headers->expects($this->any())
-                ->method('getHeaders')
-                ->will($this->returnValue(42));
 
         $headers->expects($this->any())
                 ->method('toArray')
                 ->will($this->returnValue(array()));
 
-        $response = $this->getMock('Guzzle\Http\Message\Response',
+        $response = PHPUnit_Framework_TestCase::createMock('Guzzle\Http\Message\Response',
                                    array('getStatusCode'),
                                    array(200, $headers));
 
@@ -23,7 +20,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                  ->method('getHeaders')
                  ->will($this->returnValue($headers));
 
-        $request = $this->getMock('Guzzle\Http\Message\EntityEnclosingRequest',
+        $request = PHPUnit_Framework_TestCase::createMock('Guzzle\Http\Message\EntityEnclosingRequest',
                                   array('send', 'getResponse', 'addPostFiles'),
                                   array('post', 'foo'));
         $request->expects($this->any())
@@ -33,7 +30,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                 ->method('getResponse')
                 ->will($this->returnValue($response));
 
-        $this->guzzle = $this->getMock('\Guzzle\Http\Client', array('post'));
+        $this->guzzle = PHPUnit_Framework_TestCase::createMock('\Guzzle\Http\Client', array('post'));
         $this->guzzle->expects($this->any())
                      ->method('post')
                      ->will($this->returnValue($request));
