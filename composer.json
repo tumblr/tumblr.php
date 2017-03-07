@@ -23,11 +23,11 @@
 
   "require": {
     "eher/oauth": "1.0.*",
-    "guzzle/guzzle": ">=3.1.0,<4"
+    "guzzlehttp/guzzle": "6.*"
   },
 
   "require-dev": {
-    "phpunit/phpunit": "*"
+    "phpunit/phpunit": "5.3.*"
   },
 
   "autoload": {
