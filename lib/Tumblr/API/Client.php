@@ -402,7 +402,7 @@ class Client
             $sources = $options['source'];
             unset($options['source']);
             foreach ($sources as $i => $source) {
-                $options["source[$i]"] = $source;
+                $options["data"][] = $source;
             }
         }
 
