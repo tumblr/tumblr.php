@@ -440,7 +440,7 @@ class Client
     private function getRedirect($path, $options, $addApiKey)
     {
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
-        if ($response->status === 301) {
+        if ($response->status === 301 || $response->status === 302) {
             return $response->headers['Location'][0];
         }
 
