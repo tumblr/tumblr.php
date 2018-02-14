@@ -125,12 +125,22 @@ class RequestHandler
                         'contents'  => $contents,
                     ];
                 }
-                foreach ((array) $file as $idx => $path) {
+                if ($options['type'] === 'video') {
+                    // to assure that only one video get uploaded
+                    $file = (array) $file;
                     $form[] = [
-                        'name'      => "data[$idx]",
-                        'contents'  => file_get_contents($path),
+                        'name'      => "data", // not creating array of files
+                        'contents'  => file_get_contents($file[0]),
                         'filename'  => pathinfo($path, PATHINFO_FILENAME),
                     ];
+                } else {
+                    foreach ((array) $file as $idx => $path) {
+                        $form[] = [
+                            'name'      => "data[$idx]",
+                            'contents'  => file_get_contents($path),
+                            'filename'  => pathinfo($path, PATHINFO_FILENAME),
+                        ];
+                    }
                 }
                 $guzzleOptions['multipart'] = $form;
             }
