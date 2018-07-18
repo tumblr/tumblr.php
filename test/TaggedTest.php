@@ -13,4 +13,14 @@ class TaggedTest extends TumblrTest
         );
     }
 
+    public function providerCalls2()
+    {
+        return array(
+
+            // getTaggedPosts
+            array(function ($c) { $c->getTaggedPosts('hey'); }, 'GET', 'v2/tagged', array('tag' => 'hey')),
+            array(function ($c) { $c->getTaggedPosts('hey', array('limit' => 10)); }, 'GET', 'v2/tagged', array('limit' => 10, 'tag' => 'hey')),
+
+        );
+    }
 }
