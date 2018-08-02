@@ -15,16 +15,25 @@ class Client
      *
      * @param string $consumerKey    the consumer key
      * @param string $consumerSecret the consumer secret
-     * @param string $token          oauth token
+     * @param string $oauth_token    oauth token
      * @param string $secret         oauth token secret
+     * @param string $access_token   the access token
+     * @param array $options
      */
-    public function __construct($consumerKey, $consumerSecret = null, $token = null, $secret = null)
+    public function __construct($consumerKey = null, $consumerSecret = null, $oauth_token = null, $secret = null,
+                                $oauth2_token = null, $options = [])
     {
-        $this->requestHandler = new RequestHandler();
-        $this->setConsumer($consumerKey, $consumerSecret);
+        if ($consumerKey) {
+            $this->requestHandler = new RequestHandler();
+            $this->setConsumer($consumerKey, $consumerSecret);
 
-        if ($token && $secret) {
-             $this->setToken($token, $secret);
+            if ($oauth_token && $secret) {
+                $this->setToken($oauth_token, $secret);
+            }
+        } elseif ($oauth2_token) {
+            $this->requestHandler = new RequestHandler2();
+            $options['access_token'] = $oauth2_token;
+            $this->setToken($options);
         }
     }
 
@@ -45,16 +54,21 @@ class Client
      *
      * @param string $token  the oauth token
      * @param string $secret the oauth secret
+     * @param array $options   An array of options. The `access_token` option is required.
      */
-    public function setToken($token, $secret)
+    public function setToken($token=null, $secret=null, $options=[])
     {
-        $this->requestHandler->setToken($token, $secret);
+        if ($token && $secret) {
+            $this->requestHandler->setToken($token, $secret);
+        } else {
+            $this->requestHandler->setToken($options);
+        }
     }
 
     /**
      * Retrieve RequestHandler instance
      *
-     * @return RequestHandler
+     * @return RequestHandler | RequestHandler2
      */
     public function getRequestHandler()
     {
@@ -382,6 +396,10 @@ class Client
      */
     public function getRequest($path, $options, $addApiKey)
     {
+        if (!$options) {
+            $options = [];
+        }
+
         $response = $this->makeRequest('GET', $path, $options, $addApiKey);
 
         return $this->parseResponse($response);
@@ -459,6 +477,10 @@ class Client
      */
     private function makeRequest($method, $path, $options, $addApiKey)
     {
+        if (!$options) {
+            $options = [];
+        }
+
         if ($addApiKey) {
             $options = array_merge(
                 array('api_key' => $this->apiKey),
