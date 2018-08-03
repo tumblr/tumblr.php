@@ -4,7 +4,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 {
     public function testBaseUrlHasTrailingSlash()
     {
-        $client = new Tumblr\API\Client(API_KEY);
+        $client = new Tumblr\API\Client(['consumerKey' => API_KEY]);
         $rh = $client->getRequestHandler();
         $this->assertInstanceOf('Tumblr\API\RequestHandler', $rh);
 
@@ -20,7 +20,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestThrowsErrorOnMalformedBaseUrl()
     {
-        $client = new Tumblr\API\Client(API_KEY);
+        $client = new Tumblr\API\Client(['consumerKey' => API_KEY]);
         $rh = $client->getRequestHandler();
         $rh->setBaseUrl('this is a malformed URL!');
 
@@ -45,7 +45,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $guzzle = new GuzzleHttp\Client(['handler' => $stack]);
 
         // Attached mocked guzzle client
-        $client = new Tumblr\API\Client(API_KEY);
+        $client = new Tumblr\API\Client(['consumerKey' => API_KEY]);
         $client->getRequestHandler()->client = $guzzle;
 
         // Throws because it got a 400 back
@@ -62,7 +62,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $guzzle = new GuzzleHttp\Client(['handler' => $stack]);
 
         // Attached mocked guzzle client
-        $client = new Tumblr\API\Client(API_KEY);
+        $client = new Tumblr\API\Client(['consumerKey' => API_KEY]);
         $client->getRequestHandler()->client = $guzzle;
 
         // Parses out the `reponse` field in json on success
@@ -72,7 +72,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
     // OAuth2 tests
     public function testBaseUrlHasTrailingSlash2()
     {
-        $client = new Tumblr\API\Client2(ACCESS_TOKEN);
+        $client = new Tumblr\API\Client(['oauth2Token' => ACCESS_TOKEN]);
         $rh = $client->getRequestHandler();
         $this->assertInstanceOf('Tumblr\API\RequestHandler2', $rh);
 
@@ -88,7 +88,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestThrowsErrorOnMalformedBaseUrl2()
     {
-        $client = new Tumblr\API\Client2(ACCESS_TOKEN);
+        $client = new Tumblr\API\Client(['oauth2Token' => ACCESS_TOKEN]);
         $rh = $client->getRequestHandler();
         $rh->setBaseUrl('this is a malformed URL!');
 
@@ -113,7 +113,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $guzzle = new GuzzleHttp\Client(['handler' => $stack]);
 
         // Attached mocked guzzle client
-        $client = new Tumblr\API\Client2(ACCESS_TOKEN);
+        $client = new Tumblr\API\Client(['oauth2Token' => ACCESS_TOKEN]);
         $client->getRequestHandler()->client = $guzzle;
 
         // Throws because it got a 400 back
@@ -130,7 +130,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $guzzle = new GuzzleHttp\Client(['handler' => $stack]);
 
         // Attached mocked guzzle client
-        $client = new Tumblr\API\Client2(ACCESS_TOKEN);
+        $client = new Tumblr\API\Client(['oauth2Token' => ACCESS_TOKEN]);
         $client->getRequestHandler()->client = $guzzle;
 
         // Parses out the `response` field in json on success

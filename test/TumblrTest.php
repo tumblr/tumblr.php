@@ -18,7 +18,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($response));
 
         // Create a new client and set it up to use that request handler
-        $client = new Tumblr\API\Client(API_KEY);
+        $client = new Tumblr\API\Client(['consumerKey' => API_KEY]);
         $ref = new ReflectionObject($client);
         $prop = $ref->getProperty('requestHandler');
         $prop->setAccessible(true);
@@ -47,7 +47,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($response));
 
         // Create a new client and set it up to use that request handler
-        $client = new Tumblr\API\Client2(ACCESS_TOKEN);
+        $client = new Tumblr\API\Client(['oauth2Token' => ACCESS_TOKEN]);
         $ref = new ReflectionObject($client);
         $prop = $ref->getProperty('requestHandler');
         $prop->setAccessible(true);
