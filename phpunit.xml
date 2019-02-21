@@ -1,15 +1,29 @@
-<phpunit bootstrap="test/bootstrap.php" colors="true">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    bootstrap="test/bootstrap.php"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="false"
+    stopOnFailure="false"
+>
     <testsuites>
-        <testsuite name="Tumblr SDK for PHP - Test Suite">
-            <directory>test</directory>
+        <testsuite name="Tumblr SDK for PHP">
+            <directory suffix=".php">./test</directory>
         </testsuite>
     </testsuites>
+
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
+        <log type="coverage-html" target="./coverage" showUncoveredFiles="true"/>
+    </logging>
+
     <filter>
         <whitelist>
-            <directory suffix=".php">lib</directory>
+            <directory>./lib</directory>
         </whitelist>
     </filter>
-    <logging>
-        <log type="coverage-html" target="./coverage" highlight="true"/>
-    </logging>
 </phpunit>

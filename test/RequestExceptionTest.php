@@ -1,6 +1,6 @@
 <?php
 
-class RequestExceptionTest extends PHPUnit_Framework_TestCase
+class RequestExceptionTest extends PHPUnit\Framework\TestCase
 {
     public function provider()
     {
