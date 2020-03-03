@@ -2,13 +2,16 @@
 
 namespace Tumblr\API;
 
+use Tumblr\API\NPF\Write\NPFScheme;
+use Tumblr\API\NPF\Write\NPFReblogScheme;
+
 /**
  * A client to access the Tumblr API
  */
 class Client
 {
 
-    private $apiKey;
+    private string $apiKey;
 
     /**
      * Create a new Client
@@ -18,7 +21,7 @@ class Client
      * @param string $token          oauth token
      * @param string $secret         oauth token secret
      */
-    public function __construct($consumerKey, $consumerSecret = null, $token = null, $secret = null)
+    public function __construct(string $consumerKey, string $consumerSecret = null, string $token = null, string $secret = null)
     {
         $this->requestHandler = new RequestHandler();
         $this->setConsumer($consumerKey, $consumerSecret);
@@ -205,9 +208,9 @@ class Client
      *
      * @return array the response array
      */
-    public function editPost($blogName, $postId, $data)
+    public function editPost($blogName, $postId, NPFScheme $data)
     {
-        $data['id'] = $postId;
+        $data->id = $postId;
         $path = $this->blogPath($blogName, '/post/edit');
 
         return $this->postRequest($path, $data, false);
@@ -221,7 +224,7 @@ class Client
      *
      * @return array the response array
      */
-    public function createPost($blogName, $data)
+    public function createPost($blogName, NPFScheme $data)
     {
         $path = $this->blogPath($blogName, '/post');
 

@@ -1,6 +1,6 @@
 <?php
 
-class RequestHandlerTest extends \PHPUnit_Framework_TestCase
+class RequestHandlerTest extends \PHPUnit\Framework\TestCase
 {
     public function testBaseUrlHasTrailingSlash()
     {
