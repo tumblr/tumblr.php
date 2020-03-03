@@ -9,15 +9,12 @@ class RequestHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('Tumblr\API\RequestHandler', $rh);
 
         $rh->setBaseUrl('http://example.com');
-        $this->assertAttributeEquals('http://example.com/', 'baseUrl', $rh);
+        $this->assertEquals('http://example.com/', $rh->baseUrl);
 
         $rh->setBaseUrl('http://example.com/');
-        $this->assertAttributeEquals('http://example.com/', 'baseUrl', $rh);
+        $this->assertEquals('http://example.com/', $rh->baseUrl);
     }
 
-     /**
-     * @expectedException GuzzleHttp\Exception\ConnectException
-     */
     public function testRequestThrowsErrorOnMalformedBaseUrl()
     {
         $client = new Tumblr\API\Client(API_KEY);
@@ -25,16 +22,11 @@ class RequestHandlerTest extends \PHPUnit\Framework\TestCase
         $rh->setBaseUrl('this is a malformed URL!');
 
         $options = array('some kinda option');
-
+        $this->expectException(GuzzleHttp\Exception\ConnectException::class);
         $rh->request('GET', 'foo', $options);
 
     }
 
-    /**
-     * @expectedException Tumblr\API\RequestException
-     * @expectedExceptionCode 400
-     * @expectedExceptionMessage Sadface
-     */
     public function testRequestThrowsOnBadResponse()
     {
         // Setup mock handler and response
@@ -48,6 +40,9 @@ class RequestHandlerTest extends \PHPUnit\Framework\TestCase
         $client = new Tumblr\API\Client(API_KEY);
         $client->getRequestHandler()->client = $guzzle;
 
+        $this->expectException(Tumblr\API\RequestException::class);
+        $this->expectExceptionCode(400);
+        $this->expectExceptionMessage("Sadface");
         // Throws because it got a 400 back
         $client->getBlogInfo('ceyko.tumblr.com');
     }

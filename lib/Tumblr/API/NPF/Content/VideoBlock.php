@@ -20,7 +20,7 @@ class VideoBlock extends ContentBlock {
     protected EmbedIFrameBlock $embed_iframe;
     protected array $metadata;
     protected ArributionObject $attribution;
-    protected boolean $can_autoplay_on_cellular;
+    protected bool $can_autoplay_on_cellular;
 
     public function __construct(string $url = "", MediaBlock $media = null, string $provider = "",
                                  MediaBlock $poster = null, string $embed_html = "", string $embed_url = "",

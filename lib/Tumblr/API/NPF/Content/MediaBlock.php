@@ -9,9 +9,9 @@ class MediaBlock extends ContentBlock {
     protected string $url;
     protected int $width;
     protected int $height;
-    protected boolean $original_dimensions_missing;
-    protected boolean $cropped;
-    protected boolean $has_original_dimensions;
+    protected bool $original_dimensions_missing;
+    protected bool $cropped;
+    protected bool $has_original_dimensions;
 
     public function __construct($type = "", $url, $width = 540, $height = 405,
                                  $original_dimensions_missing = false,

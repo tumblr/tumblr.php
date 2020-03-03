@@ -14,4 +14,8 @@ abstract class ContentBlock {
             return $this->$property;
         }
     }
+
+    public function toJSON() {
+        return \get_object_vars($this);
+    }
 }

@@ -49,4 +49,20 @@ class TumblrTest extends \PHPUnit\Framework\TestCase
         return $response;
     }
 
+    private function prepareGuzzleClient($type, $path, $params, $response) {
+        // Create request mock and set it to check for the proper response
+        $request = $this->createMock(RequestHandler::class);
+        $request->expects($this->once())
+            ->method('request')
+            ->with($this->equalTo($type), $this->equalTo($path), $this->equalTo($params))
+            ->will($this->returnValue($response));
+
+        // Create a new client and set it up to use that request handler
+        $client = new Tumblr\API\Client(API_KEY);
+        $ref = new ReflectionObject($client);
+        $prop = $ref->getProperty('requestHandler');
+        $prop->setAccessible(true);
+        $prop->setValue($client, $request);
+    }
+
 }

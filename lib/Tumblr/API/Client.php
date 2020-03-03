@@ -211,8 +211,13 @@ class Client
     public function editPost($blogName, $postId, NPFScheme $data)
     {
         $data->id = $postId;
-        $path = $this->blogPath($blogName, '/post/edit');
+        $path = $this->blogPath($blogName, '/posts/'.$postId);
+        return $this->postRequest($path, $data->toJSON(), false);
+    }
 
+    public function editLegacyPost($blogName, $postId, $data) {
+        $data['id'] = $postId;
+        $path = $this->blogPath($blogName, '/post/edit');
         return $this->postRequest($path, $data, false);
     }
 
@@ -226,6 +231,12 @@ class Client
      */
     public function createPost($blogName, NPFScheme $data)
     {
+        $path = $this->blogPath($blogName, '/posts');
+
+        return $this->postRequest($path, $data->toJSON(), false);
+    }
+
+    public function createLegacyPost($blogName, $data) {
         $path = $this->blogPath($blogName, '/post');
 
         return $this->postRequest($path, $data, false);

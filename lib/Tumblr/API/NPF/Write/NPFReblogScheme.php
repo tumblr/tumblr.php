@@ -8,10 +8,10 @@ class NPFReblogScheme extends NPFScheme {
     protected string $parent_tumblelog_uuid;
     protected int $parent_post_id;
     protected string $reblog_key;
-    protected boolean $hide_trail;
+    protected bool $hide_trail;
 
     public function  __construct($content, $layout= [], 
-                        $state = NPFCreateState.Published,
+                        $state = NPFCreateState::Published,
                         $publish_on = NULL, 
                         $tags = NULL,
                         $source_url = NULL,

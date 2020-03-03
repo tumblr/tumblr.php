@@ -20,7 +20,7 @@ class TextBlock extends ContentBlock {
     }
 
     protected function validSubtype($subtype) {
-        if(!in_array($subtype, TextBlockSubtypes::get()) && $subtype !== "") {
+        if(!\in_array($subtype, TextBlockSubtypes::get()) && $subtype !== "") {
             throw new InvalidSubtypeException($subtype . "is not a valid subtype");
         }
     }
