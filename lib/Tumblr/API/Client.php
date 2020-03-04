@@ -203,8 +203,8 @@ class Client
      * Edit a post
      *
      * @param string $blogName the name of the blog
-     * @param int    $postId   the id of the post to edit
-     * @param array  $data     the data to save
+     * @param int $postId the id of the post to edit
+     * @param NPFScheme $data the data to save
      *
      * @return array the response array
      */
@@ -215,6 +215,13 @@ class Client
         return $this->postRequest($path, $data->toJSON(), false);
     }
 
+    /**
+     * @param $blogName the name of the blog
+     * @param $postId the id of the post to edit
+     * @param $data the data to save
+     *
+     * @return array the response array
+     */
     public function editLegacyPost($blogName, $postId, $data) {
         $data['id'] = $postId;
         $path = $this->blogPath($blogName, '/post/edit');
@@ -225,7 +232,7 @@ class Client
      * Create a post
      *
      * @param string $blogName the name of the blog
-     * @param array  $data     the data to save
+     * @param NPFScheme $data the data to save
      *
      * @return array the response array
      */
@@ -236,6 +243,12 @@ class Client
         return $this->postRequest($path, $data->toJSON(), false);
     }
 
+    /**
+     * @param $blogName the name of the blog
+     * @param $data the data to save
+     *
+     * @return array the response array
+     */
     public function createLegacyPost($blogName, $data) {
         $path = $this->blogPath($blogName, '/post');
 
