@@ -9,30 +9,60 @@ use Tumblr\API\NPF\Content\EmbedIFrameBlock;
 use Tumblr\API\NPF\Exception\InvalidURLException;
 
 class VideoBlock extends ContentBlock {
-    use Tumblr\API\NPF\Content\ValidURL;
-    
-    protected string $url;
-    protected MediaBlock $media;
-    protected string $provider;
-    protected MediaBlock $poster;
-    protected string $embed_html;
-    protected string $embed_url;
-    protected EmbedIFrameBlock $embed_iframe;
-    protected array $metadata;
-    protected ArributionObject $attribution;
-    protected bool $can_autoplay_on_cellular;
+    use Tumblr\API\NPF\Content\ValidationTrait;
+
+    /**
+     * @var string
+     */
+    protected $url;
+    /**
+     * @var \Tumblr\API\NPF\Content\MediaBlock
+     */
+    protected $media;
+    /**
+     * @var string
+     */
+    protected $provider;
+    /**
+     * @var \Tumblr\API\NPF\Content\MediaBlock
+     */
+    protected $poster;
+    /**
+     * @var string
+     */
+    protected $embed_html;
+    /**
+     * @var string
+     */
+    protected $embed_url;
+    /**
+     * @var \Tumblr\API\NPF\Content\EmbedIFrameBlock
+     */
+    protected $embed_iframe;
+    /**
+     * @var array
+     */
+    protected $metadata;
+    /**
+     * @var AttributionObject
+     */
+    protected $attribution;
+    /**
+     * @var bool
+     */
+    protected $can_autoplay_on_cellular;
 
     public function __construct(string $url = "", MediaBlock $media = null, string $provider = "",
                                  MediaBlock $poster = null, string $embed_html = "", string $embed_url = "",
-                                 EmbedIFrameBlock $embed_iframe = null, object $metadata = null, 
-                                 AttibutionObject $attribution = null, $can_autoplay_on_cellular = false) {
+                                 EmbedIFrameBlock $embed_iframe = null, array $metadata = null,
+                                 AttributionObject $attribution = null, $can_autoplay_on_cellular = false) {
         parent::__construct("video");
         $this->url = validURL($url);
         $this->media = $media;
         $this->provider = $provider;
         $this->poster = $poster;
         $this->embed_html = $embed_html;
-        $this->embeb_url = validURL($embed_url);
+        $this->embed_url = validURL($embed_url);
         $this->embed_iframe = $embed_iframe;
         $this->metadata = $metadata;
         $this->attribution = $attribution;

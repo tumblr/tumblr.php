@@ -7,9 +7,18 @@ use Tumblr\API\NPF\Content\TextBlockSubtypes;
 use Tumblr\API\NPF\Exception\InvalidSubtypeException;
 
 class TextBlock extends ContentBlock {
-    protected string $text;
-    protected string $subtype;
-    protected array $formatting;
+    /**
+     * @var string
+     */
+    protected $text;
+    /**
+     * @var string
+     */
+    protected $subtype;
+    /**
+     * @var array
+     */
+    protected $formatting;
 
     public function __construct($text, $subtype = "", $formatting = []) {
         parent::__construct("text");

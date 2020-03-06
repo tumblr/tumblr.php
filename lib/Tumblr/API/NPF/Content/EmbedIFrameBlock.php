@@ -6,13 +6,22 @@ use Tumblr\API\NPF\Content\ContentBlock;
 use Tumblr\API\NPF\Exception\InvalidURLException;
 
 class EmbedIFrameBlock extends ContentBlock {
-    protected string $url;
-    protected int $width;
-    protected int $height;
+    /**
+     * @var string
+     */
+    protected $url;
+    /**
+     * @var int
+     */
+    protected $width;
+    /**
+     * @var int
+     */
+    protected $height;
 
-    public function __construct($type = "", $url, $width = 540, $height = 405) {
+    public function __construct($url, string $type = "", $width = 540, $height = 405) {
         parent::__construct($type);
-        if(\filter_var($source_url, FILTER_VALIDATE_URL))
+        if(\filter_var($url, FILTER_VALIDATE_URL))
             $this->url = $url;
         else 
             throw new InvalidURLException($url . " is not a valid URL");

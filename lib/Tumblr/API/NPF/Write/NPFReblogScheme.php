@@ -29,7 +29,7 @@ class NPFReblogScheme extends NPFScheme {
        $this->hide_trail = $hide_trail;
     }
 
-    public function toJSON() {
+    public function toJSON(): string {
         return \json_encode(array_merge($this->toArray(), parent::toArray()));
     }
 

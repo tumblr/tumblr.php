@@ -6,7 +6,10 @@ use Tumblr\API\NPF\Content\Attribution\AttributionObject;
 use Tumblr\API\NPF\Content\Attribution\AttributionTypes;
 
 class BlogAttribution extends AttributionObject{
-    protected object $blog;
+    /**
+     * @var object
+     */
+    protected $blog;
 
     public function __construct(object $blog) {
         parent::__construct(AttributionTypes.Blog);

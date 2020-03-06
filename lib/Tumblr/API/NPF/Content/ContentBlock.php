@@ -3,9 +3,12 @@
 namespace Tumblr\API\NPF\Content;
 
 abstract class ContentBlock {
-    protected string $type;
+    /**
+     * @var string
+     */
+    protected $type;
 
-    protected function __construct($type) {
+    protected function __construct(string $type) {
         $this->type = $type;
     }
 

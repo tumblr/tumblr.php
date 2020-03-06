@@ -6,11 +6,20 @@ use Tumblr\API\NPF\Content\Attribution\AttributionObject;
 use Tumblr\API\NPF\Content\Attribution\AttributionTypes;
 
 class PostAttribution extends AttributionObject{
-    use Tumblr\API\NPF\Content\ValidURL;
+    use Tumblr\API\NPF\Content\ValidationTrait;
 
-    protected string $url;
-    protected object $post;
-    protected object $blog;
+    /**
+     * @var string
+     */
+    protected $url;
+    /**
+     * @var object
+     */
+    protected $post;
+    /**
+     * @var object
+     */
+    protected $blog;
 
     public function __construct(string $url, object $post, object $blog) {
         parent::__construct(AttributionTypes.Post);

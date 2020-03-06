@@ -6,14 +6,32 @@ use Tumblr\API\NPF\Content\ContentBlock;
 use Tumblr\API\NPF\Exception\InvalidURLException;
 
 class MediaBlock extends ContentBlock {
-    protected string $url;
-    protected int $width;
-    protected int $height;
-    protected bool $original_dimensions_missing;
-    protected bool $cropped;
-    protected bool $has_original_dimensions;
+    /**
+     * @var string
+     */
+    protected $url;
+    /**
+     * @var int
+     */
+    protected $width;
+    /**
+     * @var int
+     */
+    protected $height;
+    /**
+     * @var bool
+     */
+    protected $original_dimensions_missing;
+    /**
+     * @var bool
+     */
+    protected $cropped;
+    /**
+     * @var bool
+     */
+    protected $has_original_dimensions;
 
-    public function __construct($type = "", $url, $width = 540, $height = 405,
+    public function __construct($url, $type = "", $width = 540, $height = 405,
                                  $original_dimensions_missing = false,
                                  $cropped = false,
                                  $has_original_dimensions = false) {
