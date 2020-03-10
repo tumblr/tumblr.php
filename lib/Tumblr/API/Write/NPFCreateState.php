@@ -1,6 +1,6 @@
 <?php
 
-namespace Tumblr\API\NPF\Write;
+namespace Tumblr\API\Write;
 
 abstract class NPFCreateState {
     const Published = "published";

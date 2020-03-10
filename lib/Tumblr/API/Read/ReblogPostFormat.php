@@ -1,12 +1,18 @@
 <?php
 
-namespace Tumblr\API\NPF\Read;
+namespace Tumblr\API\Read;
 
 use Tumblr\API\NPF\Read\PostFormat;
 
 class ReblogPostFormat extends PostFormat {
-    protected string $parent_post_id;
-    protected string $parent_tumblelog_uuid;
+    /**
+     * @var string
+     */
+    protected $parent_post_id;
+    /**
+     * @var string
+     */
+    protected $parent_tumblelog_uuid;
 
     protected function __construct(string $object_type, string $type, $id, string $tumblelog_uuid, 
                                    string $reblog_key, array $trail = [], array $content = [], array $layout = [],

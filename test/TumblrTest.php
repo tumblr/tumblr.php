@@ -32,7 +32,7 @@ class TumblrTest extends \PHPUnit\Framework\TestCase
         $callable($client);
     }
 
-    private function getResponseMock($which)
+    protected function getResponseMock($which)
     {
         $response = new stdClass;
         if ($which == 'perfect') {
@@ -44,6 +44,13 @@ class TumblrTest extends \PHPUnit\Framework\TestCase
         } elseif ($which == 'not_found') {
             $response->status = 404;
             $response->body = '{}';
+        } else if($which == 'info') {
+            $response->status = 200;
+            $response->body = new stdClass();
+            $response->body->response = [];
+            $response->body->response["blog"] = new Tumblr\API\Read\BlogInfo(
+                'ExampleBlog', 3, 'The boys', 0, 'My Example Blog');
+            $response->body = json_encode($response->body);
         }
 
         return $response;

@@ -14,6 +14,7 @@ use Tumblr\API\NPF\Content\Attribution\AttributionType;
  * @package Tumblr\API\NPF\Content\Attribution
  */
 abstract class AttributionObject {
+    use \Tumblr\API\Read\ReadableTrait;
     /**
      * Type of attribution.
      * Used by the API to further process and embed the declared attribution.
@@ -32,11 +33,5 @@ abstract class AttributionObject {
      */
     protected function __construct(string $type) {
         $this->type = $type;
-    }
-
-    public function __get($property) {
-        if(\property_exists($this, $property)) {
-            return $this->$property;
-        }
     }
 }

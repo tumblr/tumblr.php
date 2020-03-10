@@ -3,6 +3,7 @@
 namespace Tumblr\API\NPF\Content;
 
 abstract class ContentBlock {
+    use \Tumblr\API\Read\ReadableTrait;
     /**
      * @var string
      */
@@ -10,12 +11,6 @@ abstract class ContentBlock {
 
     protected function __construct(string $type) {
         $this->type = $type;
-    }
-
-    public function __get($property) {
-        if(\property_exists($this, $property)) {
-            return $this->$property;
-        }
     }
 
     public function toJSON() {

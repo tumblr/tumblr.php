@@ -2,16 +2,20 @@
 
 namespace Tumblr\API;
 
-use Tumblr\API\NPF\Write\NPFScheme;
-use Tumblr\API\NPF\Write\NPFReblogScheme;
-
+use Tumblr\API\Write\NPFScheme;
+use Tumblr\API\Write\NPFReblogScheme;
+use Tumblr\API\Read\BlogInfo;
+use Tumblr\API\RequestException;
 /**
  * A client to access the Tumblr API
  */
 class Client
 {
-
-    private string $apiKey;
+    /**
+     * @var string
+     * API Key for a registered user
+     */
+    private $apiKey;
 
     /**
      * Create a new Client
@@ -277,13 +281,22 @@ class Client
      * Get information about a given blog
      *
      * @param  string $blogName the name of the blog to look up
-     * @return array  the response array
+     * @return BlogInfo  the response array
      */
     public function getBlogInfo($blogName)
     {
         $path = $this->blogPath($blogName, '/info');
 
-        return $this->getRequest($path, null, true);
+        $result = $this->getRequest($path, null, true);
+        $info = new BlogInfo($result->blog->title, $result->blog->posts,
+                            $result->blog->name, $result->blog->updated,
+                        $result->blog->description, $result->blog->ask,
+                        $result->blog->ask_anon, $result->blog->likes,
+                        $result->blog->is_blocked_from_primary, 
+                        $result->blog->avatar,
+                        $result->blog->theme,
+                        $result->blog->timezone_offset);
+        return $info;
     }
 
     /**

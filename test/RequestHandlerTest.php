@@ -51,7 +51,7 @@ class RequestHandlerTest extends \PHPUnit\Framework\TestCase
     {
         // Setup mock handler and response
         $mock = new GuzzleHttp\Handler\MockHandler([
-            new GuzzleHttp\Psr7\Response(200, [], '{"meta": {"status": 200, "msg": "OK"}, "response": "Response Text"}'),
+            new GuzzleHttp\Psr7\Response(200, [], '{"meta": {"status": 200, "msg": "OK"}, "response": {"blog":'.json_encode(new Tumblr\API\Read\BlogInfo()).'}}'),
         ]);
         $stack = GuzzleHttp\HandlerStack::create($mock);
         $guzzle = new GuzzleHttp\Client(['handler' => $stack]);
@@ -61,6 +61,6 @@ class RequestHandlerTest extends \PHPUnit\Framework\TestCase
         $client->getRequestHandler()->client = $guzzle;
 
         // Parses out the `reponse` field in json on success
-        $this->assertEquals($client->getBlogInfo('ceyko.tumblr.com'), 'Response Text');
+        $this->assertEquals($client->getBlogInfo('ceyko.tumblr.com'), new Tumblr\API\Read\BlogInfo());
     }
 }

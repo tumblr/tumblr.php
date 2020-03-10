@@ -1,28 +1,56 @@
 <?php
 
-namespace Tumblr\API\NPF\Write;
+namespace Tumblr\API\Write;
 
-use Tumblr\API\NPF\Write\NPFCreateState;
+use Tumblr\API\Write\NPFCreateState;
 use Tumblr\API\NPF\Exception\InvalidURLException;
 
 class NPFScheme {
+    use \Tumblr\API\Read\ReadableTrait;
+    /**
+     * @var string
+     */
     protected $id;
-    protected Array $content;
-    protected Array $layout;
-    protected string $state;
-    protected string $publish_on;
-    protected string $tags;
-    protected string $source_url;
-    protected bool $send_to_twitter;
-    protected bool $send_to_facebook;
+    /**
+     * @var array
+     */
+    protected $content;
+    /**
+     * @var array
+     */
+    protected $layout;
+    /**
+     * @var string
+     */
+    protected $state;
+    /**
+     * @var string
+     */
+    protected $publish_on;
+    /**
+     * @var string
+     */
+    protected $tags;
+    /**
+     * @var string
+     */
+    protected $source_url;
+    /**
+     * @var bool
+     */
+    protected $send_to_twitter;
+    /**
+     * @var bool
+     */
+    protected $send_to_facebook;
 
-    public function __construct($id = '', $content, $layout= [], 
-        $state = NPFCreateState::Published,
-        $publish_on = '', 
-        $tags = '',
-        $source_url = '',
-        $send_to_twitter = false,
-        $send_to_facebook = false) {
+    public function __construct($id = '', array $content, array $layout= [], 
+        string $state = NPFCreateState::Published,
+        string $publish_on = '', 
+        string $tags = '',
+        string $source_url = '',
+        bool $send_to_twitter = false,
+        bool $send_to_facebook = false) {
             $this->id = $id;
             $this->content = $content;
             $this->layout = $layout;
@@ -36,12 +64,6 @@ class NPFScheme {
 
     public function toJSON(): string {
         return \json_encode($this->toArray());
-    }
-
-    public function __get($property) {
-        if(\property_exists($this, $property)) {
-            return $this->$property;
-        }
     }
 
     public function __set($property, $value) {

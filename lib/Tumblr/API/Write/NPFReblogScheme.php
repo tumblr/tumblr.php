@@ -1,14 +1,26 @@
 <?php
 
-namespace Tumblr\API\NPF\Write;
+namespace Tumblr\API\Write;
 
 use Tumblr\API\NPF\Write\NPFScheme;
 
 class NPFReblogScheme extends NPFScheme {
-    protected string $parent_tumblelog_uuid;
-    protected int $parent_post_id;
-    protected string $reblog_key;
-    protected bool $hide_trail;
+    /**
+     * @var string
+     */
+    protected $parent_tumblelog_uuid;
+    /**
+     * @var int
+     */
+    protected $parent_post_id;
+    /**
+     * @var string
+     */
+    protected $reblog_key;
+    /**
+     * @var bool
+     */
+    protected $hide_trail;
 
     public function  __construct($content, $layout= [], 
                         $state = NPFCreateState::Published,

@@ -1,6 +1,6 @@
 <?php
 
-use Tumblr\API\NPF\Write\NPFScheme;
+use Tumblr\API\Write\NPFScheme;
 use Tumblr\API\NPF\Content\TextBlock;
 
 class PostTest extends TumblrTest
