@@ -6,9 +6,10 @@ use Tumblr\API\NPF\Content\ContentBlock;
 use Tumblr\API\NPF\Content\Attribution\AttributionObject;
 use Tumblr\API\NPF\Content\MediaBlock;
 use Tumblr\API\NPF\Exception\InvalidURLException;
+use Tumblr\API\NPF\Content\ValidationTrait;
 
 class AudioBlock extends ContentBlock {
-    use Tumblr\API\NPF\Content\ValidationTrait;
+    use ValidationTrait;
 
     /**
      * @var string

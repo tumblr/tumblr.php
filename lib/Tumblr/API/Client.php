@@ -288,14 +288,13 @@ class Client
         $path = $this->blogPath($blogName, '/info');
 
         $result = $this->getRequest($path, null, true);
-        $info = new BlogInfo($result->blog->title, $result->blog->posts,
-                            $result->blog->name, $result->blog->updated,
-                        $result->blog->description, $result->blog->ask,
-                        $result->blog->ask_anon, $result->blog->likes,
-                        $result->blog->is_blocked_from_primary, 
-                        $result->blog->avatar,
-                        $result->blog->theme,
-                        $result->blog->timezone_offset);
+        $info = new BlogInfo($result->blog->name, $result->blog->title, $result->blog->description, $result->blog->url,
+                             $result->blog->uuid, $result->blog->updated, $result->blog->posts, $result->blog->ask,
+                             $result->blog->ask_anon, $result->blog->ask_page_title, $result->blog->likes,
+                             $result->blog->is_blocked_from_primary, $result->blog->avatar, $result->blog->theme,
+                             $result->blog->timezone_offset, $result->blog->can_chat, $result->blog->can_subscribe,
+                             $result->blog->is_nsfw, $result->blog->share_likes, $result->blog->submission_page_title,
+                             $result->blog->subscribed, $result->blog->is_optout_ads);
         return $info;
     }
 
@@ -329,7 +328,33 @@ class Client
     {
         $path = $this->blogPath($blogName, '/likes');
 
-        return $this->getRequest($path, $options, true);
+        $result = $this->getRequest($path, $options, true);
+        $liked_posts = [];
+        foreach($result->liked_posts as $post) {
+            array_push($liked_posts, null);
+        }
+    }
+
+     /**
+     * Get blog followers for a given blog
+     *
+     * @param string $blogName the name of the blog to look up
+     * @param array  $options  the options for the call
+     *
+     * @return array the response array
+     */
+    public function getBlogFollowing($blogName, $options = null)
+    {
+        $path = $this->blogPath($blogName, '/following');
+
+        $result = $this->getRequest($path, $options, false);
+        $blogs = [];
+        foreach($result->blogs as $blog) {
+            array_push($blogs, new BlogInfo($blog->name, $blog->title, $blog->description,
+                                    $blog->url, $blog->uuid, $blog->updated));
+        }
+        $result->blogs = $blogs;
+        return $result;
     }
 
     /**

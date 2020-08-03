@@ -5,13 +5,14 @@ namespace Tumblr\API\NPF\Content\Attribution;
 use Tumblr\API\NPF\Content\Attribution\AttributionObject;
 use Tumblr\API\NPF\Content\Attribution\AttributionTypes;
 use Tumblr\API\NPF\Content\MediaBlock;
+use Tumblr\API\NPF\Content\ValidationTrait;
 
 /**
  * Class AppAttribution
  * @package Tumblr\API\NPF\Content\Attribution
  */
 class AppAttribution extends AttributionObject{
-    use Tumblr\API\NPF\Content\ValidationTrait;
+    use ValidationTrait;
 
     /**
      * @var string

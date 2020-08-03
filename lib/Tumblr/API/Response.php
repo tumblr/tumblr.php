@@ -19,9 +19,17 @@ class Response {
      * this response instance has as origin.
      */
     protected $response;
+    /**
+     * @var array
+     * Error load
+     * This array contains objects of the type error.
+     * If the Request was successful, this fiel will not exist.
+     */
+    protected $error;
 
-    public function __construct(array $meta = [], array $response = []) {
+    public function __construct(array $meta = [], array $response = [], ?array $errors = []) {
         $this->meta = $meta;
         $this->response = $response;
+        $this->errors = $errors;
     }
 }

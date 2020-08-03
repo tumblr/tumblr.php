@@ -38,7 +38,7 @@ class PostFormat implements \JsonSerializable {
     protected $layout;
 
     protected function __construct(string $object_type, string $type, $id, string $tumblelog_uuid, 
-                                 string $reblog_key, array $trail = [], array $content = [], array $layout = []){
+                                 string $reblog_key, ?array $trail = [], ?array $content = [], ?array $layout = []){
         $this->object_type = $object_type;
         $this->type = $type;
         $this->id = $id;

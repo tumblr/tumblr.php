@@ -76,16 +76,17 @@ class Theme implements JsonSerializable {
 
     /**
      * default c'tor
+     * @param string $avatar_shape
      */
-    public function __construct(string $avatar_shape = '', string $background_color = '',
-                                string $body_font = '', mixed $header_bounds = NULL, 
-                                string $header_image = '', string $header_image_poster = '',
-                                string $header_image_focused = '', string $header_image_scaled = '',
-                                bool $header_stretch = false, string $link_color = '',
-                                bool $show_avatar = true, bool $show_description = true,
-                                bool $show_header_image = false, bool $show_title = true,
-                                string $title_color = '', string $title_font = '',
-                                string $title_font_weight = '') {
+    public function __construct(?string $avatar_shape = '', ?string $background_color = '',
+                                ?string $body_font = '', ?mixed $header_bounds = NULL, 
+                                ?string $header_image = '', ?string $header_image_poster = '',
+                                ?string $header_image_focused = '', ?string $header_image_scaled = '',
+                                ?bool $header_stretch = false, ?string $link_color = '',
+                                ?bool $show_avatar = true, ?bool $show_description = true,
+                                ?bool $show_header_image = false, ?bool $show_title = true,
+                                ?string $title_color = '', ?string $title_font = '',
+                                ?string $title_font_weight = '') {
         $this->avatar_shape = $avatar_shape;
         $this->background_color = $background_color;
         $this->body_font = $body_font;
