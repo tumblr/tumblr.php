@@ -1,6 +1,6 @@
 <?php
 
-class RequestHandlerTest extends \PHPUnit_Framework_TestCase
+class RequestHandlerTest extends \PHPUnit\Framework\TestCase
 {
     public function testBaseUrlHasTrailingSlash()
     {
@@ -9,15 +9,12 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Tumblr\API\RequestHandler', $rh);
 
         $rh->setBaseUrl('http://example.com');
-        $this->assertAttributeEquals('http://example.com/', 'baseUrl', $rh);
+        $this->assertEquals('http://example.com/', $rh->baseUrl);
 
         $rh->setBaseUrl('http://example.com/');
-        $this->assertAttributeEquals('http://example.com/', 'baseUrl', $rh);
+        $this->assertEquals('http://example.com/', $rh->baseUrl);
     }
 
-     /**
-     * @expectedException GuzzleHttp\Exception\ConnectException
-     */
     public function testRequestThrowsErrorOnMalformedBaseUrl()
     {
         $client = new Tumblr\API\Client(API_KEY);
@@ -25,16 +22,11 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $rh->setBaseUrl('this is a malformed URL!');
 
         $options = array('some kinda option');
-
+        $this->expectException(GuzzleHttp\Exception\ConnectException::class);
         $rh->request('GET', 'foo', $options);
 
     }
 
-    /**
-     * @expectedException Tumblr\API\RequestException
-     * @expectedExceptionCode 400
-     * @expectedExceptionMessage Sadface
-     */
     public function testRequestThrowsOnBadResponse()
     {
         // Setup mock handler and response
@@ -48,6 +40,9 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $client = new Tumblr\API\Client(API_KEY);
         $client->getRequestHandler()->client = $guzzle;
 
+        $this->expectException(Tumblr\API\RequestException::class);
+        $this->expectExceptionCode(400);
+        $this->expectExceptionMessage("Sadface");
         // Throws because it got a 400 back
         $client->getBlogInfo('ceyko.tumblr.com');
     }
@@ -56,7 +51,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
     {
         // Setup mock handler and response
         $mock = new GuzzleHttp\Handler\MockHandler([
-            new GuzzleHttp\Psr7\Response(200, [], '{"meta": {"status": 200, "msg": "OK"}, "response": "Response Text"}'),
+            new GuzzleHttp\Psr7\Response(200, [], '{"meta": {"status": 200, "msg": "OK"}, "response": {"blog":'.json_encode(new Tumblr\API\Read\BlogInfo()).'}}'),
         ]);
         $stack = GuzzleHttp\HandlerStack::create($mock);
         $guzzle = new GuzzleHttp\Client(['handler' => $stack]);
@@ -66,6 +61,6 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $client->getRequestHandler()->client = $guzzle;
 
         // Parses out the `reponse` field in json on success
-        $this->assertEquals($client->getBlogInfo('ceyko.tumblr.com'), 'Response Text');
+        $this->assertEquals($client->getBlogInfo('ceyko.tumblr.com'), new Tumblr\API\Read\BlogInfo());
     }
 }

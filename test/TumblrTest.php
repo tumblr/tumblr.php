@@ -1,6 +1,7 @@
 <?php
+use Tumblr\API\RequestHandler;
 
-class TumblrTest extends PHPUnit_Framework_TestCase
+class TumblrTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider providerCalls
@@ -11,7 +12,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase
         $response = $this->getResponseMock($which_mock);
 
         // Create request mock and set it to check for the proper response
-        $request = $this->getMock('Tumblr\API\RequestHandler', array('request'));
+        $request = $this->createMock(RequestHandler::class);
         $request->expects($this->once())
             ->method('request')
             ->with($this->equalTo($type), $this->equalTo($path), $this->equalTo($params))
@@ -31,7 +32,7 @@ class TumblrTest extends PHPUnit_Framework_TestCase
         $callable($client);
     }
 
-    private function getResponseMock($which)
+    protected function getResponseMock($which)
     {
         $response = new stdClass;
         if ($which == 'perfect') {
@@ -43,9 +44,32 @@ class TumblrTest extends PHPUnit_Framework_TestCase
         } elseif ($which == 'not_found') {
             $response->status = 404;
             $response->body = '{}';
+        } else if($which == 'info') {
+            $response->status = 200;
+            $response->body = new stdClass();
+            $response->body->response = [];
+            $response->body->response["blog"] = new Tumblr\API\Read\BlogInfo(
+                'ExampleBlog', 3, 'The boys', 0, 'My Example Blog');
+            $response->body = json_encode($response->body);
         }
 
         return $response;
+    }
+
+    private function prepareGuzzleClient($type, $path, $params, $response) {
+        // Create request mock and set it to check for the proper response
+        $request = $this->createMock(RequestHandler::class);
+        $request->expects($this->once())
+            ->method('request')
+            ->with($this->equalTo($type), $this->equalTo($path), $this->equalTo($params))
+            ->will($this->returnValue($response));
+
+        // Create a new client and set it up to use that request handler
+        $client = new Tumblr\API\Client(API_KEY);
+        $ref = new ReflectionObject($client);
+        $prop = $ref->getProperty('requestHandler');
+        $prop->setAccessible(true);
+        $prop->setValue($client, $request);
     }
 
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Tumblr\API\Response;
+
 class BlogTest extends TumblrTest
 {
     public function providerCalls()
@@ -9,7 +11,9 @@ class BlogTest extends TumblrTest
         return array(
 
             // getBlogInfo
-            array(function ($c) { $c->getBlogInfo('b'); }, 'GET', 'v2/blog/b.tumblr.com/info', array('api_key' => API_KEY)),
+            array(function ($c) { $result = $c->getBlogInfo('b');
+                $this->assertEquals('{"response":{"blog":'.json_encode($result).'}}', parent::getResponseMock('info')->body);
+            }, 'GET', 'v2/blog/b.tumblr.com/info', array('api_key' => API_KEY), 'info'),
 
             // getBlogAvatar
             array(function ($c) use ($test) {

@@ -2,12 +2,20 @@
 
 namespace Tumblr\API;
 
+use Tumblr\API\Write\NPFScheme;
+use Tumblr\API\Write\NPFReblogScheme;
+use Tumblr\API\Read\BlogInfo;
+use Tumblr\API\RequestException;
+use Tumblr\API\Read\User;
 /**
  * A client to access the Tumblr API
  */
 class Client
 {
-
+    /**
+     * @var string
+     * API Key for a registered user
+     */
     private $apiKey;
 
     /**
@@ -18,7 +26,7 @@ class Client
      * @param string $token          oauth token
      * @param string $secret         oauth token secret
      */
-    public function __construct($consumerKey, $consumerSecret = null, $token = null, $secret = null)
+    public function __construct(string $consumerKey, string $consumerSecret = null, string $token = null, string $secret = null)
     {
         $this->requestHandler = new RequestHandler();
         $this->setConsumer($consumerKey, $consumerSecret);
@@ -68,7 +76,14 @@ class Client
      */
     public function getUserInfo()
     {
-        return $this->getRequest('v2/user/info', null, false);
+        $response = $this->getRequest('v2/user/info', null, false);
+        return new User(
+            $response->user->name,
+            $response->user->likes,
+            $response->user->default_post_format,
+            $response->user->following,  
+            $response->user->blogs
+        );
     }
 
     /**
@@ -200,16 +215,28 @@ class Client
      * Edit a post
      *
      * @param string $blogName the name of the blog
-     * @param int    $postId   the id of the post to edit
-     * @param array  $data     the data to save
+     * @param int $postId the id of the post to edit
+     * @param NPFScheme $data the data to save
      *
      * @return array the response array
      */
-    public function editPost($blogName, $postId, $data)
+    public function editPost($blogName, $postId, NPFScheme $data)
     {
+        $data->id = $postId;
+        $path = $this->blogPath($blogName, '/posts/'.$postId);
+        return $this->postRequest($path, $data->toJSON(), false);
+    }
+
+    /**
+     * @param $blogName the name of the blog
+     * @param $postId the id of the post to edit
+     * @param $data the data to save
+     *
+     * @return array the response array
+     */
+    public function editLegacyPost($blogName, $postId, $data) {
         $data['id'] = $postId;
         $path = $this->blogPath($blogName, '/post/edit');
-
         return $this->postRequest($path, $data, false);
     }
 
@@ -217,12 +244,24 @@ class Client
      * Create a post
      *
      * @param string $blogName the name of the blog
-     * @param array  $data     the data to save
+     * @param NPFScheme $data the data to save
      *
      * @return array the response array
      */
-    public function createPost($blogName, $data)
+    public function createPost($blogName, NPFScheme $data)
     {
+        $path = $this->blogPath($blogName, '/posts');
+
+        return $this->postRequest($path, $data->toJSON(), false);
+    }
+
+    /**
+     * @param $blogName the name of the blog
+     * @param $data the data to save
+     *
+     * @return array the response array
+     */
+    public function createLegacyPost($blogName, $data) {
         $path = $this->blogPath($blogName, '/post');
 
         return $this->postRequest($path, $data, false);
@@ -250,13 +289,21 @@ class Client
      * Get information about a given blog
      *
      * @param  string $blogName the name of the blog to look up
-     * @return array  the response array
+     * @return BlogInfo  the response array
      */
     public function getBlogInfo($blogName)
     {
         $path = $this->blogPath($blogName, '/info');
 
-        return $this->getRequest($path, null, true);
+        $result = $this->getRequest($path, null, true);
+        $info = new BlogInfo($result->blog->name, $result->blog->title, $result->blog->description, $result->blog->url,
+                             $result->blog->uuid, $result->blog->updated, $result->blog->posts, $result->blog->ask,
+                             $result->blog->ask_anon, $result->blog->ask_page_title, $result->blog->likes,
+                             $result->blog->is_blocked_from_primary, $result->blog->avatar, $result->blog->theme,
+                             $result->blog->timezone_offset, $result->blog->can_chat, $result->blog->can_subscribe,
+                             $result->blog->is_nsfw, $result->blog->share_likes, $result->blog->submission_page_title,
+                             $result->blog->subscribed, $result->blog->is_optout_ads);
+        return $info;
     }
 
     /**
@@ -289,7 +336,33 @@ class Client
     {
         $path = $this->blogPath($blogName, '/likes');
 
-        return $this->getRequest($path, $options, true);
+        $result = $this->getRequest($path, $options, true);
+        $liked_posts = [];
+        foreach($result->liked_posts as $post) {
+            array_push($liked_posts, null);
+        }
+    }
+
+     /**
+     * Get blog followers for a given blog
+     *
+     * @param string $blogName the name of the blog to look up
+     * @param array  $options  the options for the call
+     *
+     * @return array the response array
+     */
+    public function getBlogFollowing($blogName, $options = null)
+    {
+        $path = $this->blogPath($blogName, '/following');
+
+        $result = $this->getRequest($path, $options, false);
+        $blogs = [];
+        foreach($result->blogs as $blog) {
+            array_push($blogs, new BlogInfo($blog->name, $blog->title, $blog->description,
+                                    $blog->url, $blog->uuid, $blog->updated));
+        }
+        $result->blogs = $blogs;
+        return $result;
     }
 
     /**
@@ -378,7 +451,7 @@ class Client
      * @param array  $options   the options to call with
      * @param bool   $addApiKey whether or not to add the api key
      *
-     * @return array the response object (parsed)
+     * @return stdClass the response object (parsed)
      */
     public function getRequest($path, $options, $addApiKey)
     {

@@ -10,3 +10,5 @@ usage.php
 
 vendor
 composer.lock
+.phpunit.result.cache
+.idea/*
