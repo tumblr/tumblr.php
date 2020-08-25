@@ -4,8 +4,9 @@ namespace Tumblr\API\Write;
 
 use Tumblr\API\Write\NPFCreateState;
 use Tumblr\API\NPF\Exception\InvalidURLException;
+use Tumblr\API\HashInitializable;
 
-class NPFScheme {
+class NPFScheme extends HashInitializable {
     use \Tumblr\API\Read\ReadableTrait;
     /**
      * @var string
@@ -20,9 +21,9 @@ class NPFScheme {
      */
     protected $layout;
     /**
-     * @var string
+     * @var NPFCreateState
      */
-    protected $state;
+    protected $state = NPFCreateState::Published;
     /**
      * @var string
      */
@@ -44,22 +45,9 @@ class NPFScheme {
      */
     protected $send_to_facebook;
 
-    public function __construct($id = '', array $content, array $layout= [], 
-        string $state = NPFCreateState::Published,
-        string $publish_on = '', 
-        string $tags = '',
-        string $source_url = '',
-        bool $send_to_twitter = false,
-        bool $send_to_facebook = false) {
-            $this->id = $id;
+    public function __construct(array $content, $args) {
             $this->content = $content;
-            $this->layout = $layout;
-            $this->state = $state;
-            $this->publish_on = ($publish_on === NULL? \date('l jS \of F Y h:i:s A') : $publish_on);
-            $this->tags = $tags;
-            $this->source_url = (\filter_var($source_url, FILTER_VALIDATE_URL) ? $source_url : "");
-            $this->send_to_twitter = $send_to_twitter;
-            $this->send_to_facebook = $send_to_facebook;
+            parent::__construct($args);
     }
 
     public function toJSON(): string {
@@ -68,7 +56,7 @@ class NPFScheme {
 
     public function __set($property, $value) {
         if($property == "source_url") {
-            if(\filter_var($source_url, FILTER_VALIDATE_URL))
+            if(\filter_var($property, FILTER_VALIDATE_URL))
                 $this->$property = $value;
             else
                 throw new InvalidURLException($value . " is not a valid URL");

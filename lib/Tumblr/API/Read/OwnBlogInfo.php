@@ -2,7 +2,7 @@
 
 namespace Tumblr\API\Read;
 
-class OwnBlogInfo extends  \Tumblr\API\Read\BlogInfo {
+class OwnBlogInfo extends \Tumblr\API\Read\BlogInfo {
     /**
      * @var bool
      */
@@ -60,7 +60,7 @@ class OwnBlogInfo extends  \Tumblr\API\Read\BlogInfo {
      */
     protected $type;
 
-    public function __construct() {
-        throw new Exception("Not implemented");
+    public function __construct($args) {
+        parent::__construct($args);
     }
 }

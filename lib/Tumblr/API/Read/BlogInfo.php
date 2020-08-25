@@ -3,10 +3,11 @@
 namespace Tumblr\API\Read;
 
 use Tumblr\API\Read\Theme;
+use Tumblr\API\HashInitializable;
 
-class BlogInfo implements \JsonSerializable{
+class BlogInfo extends HashInitializable implements \JsonSerializable{
     use \Tumblr\API\Read\ReadableTrait;
-    use \Tumblr\API\NPF\ValidationTrait;
+    use \Tumblr\API\NPF\Content\ValidationTrait;
     /**
      * @var string
      */
@@ -136,38 +137,7 @@ class BlogInfo implements \JsonSerializable{
      * @param string $uuid UUID of the blog
      * @param bool $is_optout_ads Status if this blog is optout of ads
      */
-    public function __construct(?string $name = '', ?string $title = '', ?string $description = '', ?string $url = "",
-                                ?string $uuid = '', ?int $updated = 0, ?int $posts = 0,
-                                ?bool $ask = false, ?bool $ask_anon = false, ?string $ask_page_title = '', ?int $likes = 0,
-                                ?bool $followed = false, ?bool $is_blocked_from_primary = false, ?array $avatar = [],
-                                ?Theme $theme = NULL, ?string $timezone_offset = '', ?bool $can_chat = false,
-                                ?bool $can_send_fan_mail = false, ?bool $can_subscribe = false, ?bool $is_nsfw = false, 
-                                ?bool $share_likes = false, ?string $submission_page_title = "", ?bool $subscribed = false, 
-                                ?int $total_posts = 0, ?bool $is_optout_ads = false) {
-        $this->title = $title;
-        $this->posts = $posts;
-        $this->name = $name;
-        $this->updated = $updated;
-        $this->description = $description;
-        $this->ask = $ask;
-        $this->ask_anon =  $ask_anon;
-        $this->ask_page_title = $ask_page_title;
-        $this->likes = $likes;
-        $this->followed = $followed;
-        $this->is_blocked_from_primary = $is_blocked_from_primary;
-        $this->avatar = $avatar;
-        $this->theme = $theme;
-        $this->timezone_offset = $timezone_offset;
-        $this->can_chat = $can_chat;
-        $this->can_send_fan_mail = $can_send_fan_mail;
-        $this->can_subscribe = $can_subscribe;
-        $this->is_nsfw = $is_nsfw;
-        $this->share_likes = $share_likes;
-        $this->submission_page_title = $submission_page_title;
-        $this->subscribed = $subscribed;
-        $this->total_posts = $total_posts;
-        $this->url = self::validURL($url);
-        $this->uuid = $uuid;
-        $this->is_optout_ads = $is_optout_ads;
+    public function __construct($args) {
+        parent::__construct($args);
     }
 }

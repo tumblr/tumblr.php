@@ -40,8 +40,8 @@ class AppAttribution extends AttributionObject{
      */
     public function __construct(string $url, string $app_name = "", string $display_text = "",
                                 MediaBlock $logo = null) {
-        parent::__construct(AttributionTypes.App);
-        $this->url = validURL($url);
+        parent::__construct(AttributionTypes::App);
+        $this->url = $this->validURL($url);
         $this->app_name = $app_name;
         $this->display_text = $display_text;
         $this->logo = $logo;

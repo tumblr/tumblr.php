@@ -6,6 +6,7 @@ use Tumblr\API\Write\NPFScheme;
 use Tumblr\API\Write\NPFReblogScheme;
 use Tumblr\API\Read\BlogInfo;
 use Tumblr\API\RequestException;
+use Tumblr\API\Read\User;
 /**
  * A client to access the Tumblr API
  */
@@ -75,7 +76,14 @@ class Client
      */
     public function getUserInfo()
     {
-        return $this->getRequest('v2/user/info', null, false);
+        $response = $this->getRequest('v2/user/info', null, false);
+        return new User(
+            $response->user->name,
+            $response->user->likes,
+            $response->user->default_post_format,
+            $response->user->following,  
+            $response->user->blogs
+        );
     }
 
     /**
@@ -443,7 +451,7 @@ class Client
      * @param array  $options   the options to call with
      * @param bool   $addApiKey whether or not to add the api key
      *
-     * @return array the response object (parsed)
+     * @return stdClass the response object (parsed)
      */
     public function getRequest($path, $options, $addApiKey)
     {

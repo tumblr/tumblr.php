@@ -2,7 +2,7 @@
 
 namespace Tumblr\API\Write;
 
-use Tumblr\API\NPF\Write\NPFScheme;
+use Tumblr\API\Write\NPFScheme;
 
 class NPFReblogScheme extends NPFScheme {
     /**
@@ -22,23 +22,14 @@ class NPFReblogScheme extends NPFScheme {
      */
     protected $hide_trail;
 
-    public function  __construct($content, $layout= [], 
-                        $state = NPFCreateState::Published,
-                        $publish_on = NULL, 
-                        $tags = NULL,
-                        $source_url = NULL,
-                        $send_to_twitter = false,
-                        $send_to_facebook = false,
+    public function  __construct($content,
                         $parent_tumblelog_uuid,
                         $parent_post_id,
-                        $reblog_key,
-                        $hide_trail = false) {
-        parent::construct($content, $layout, $state, $publish_on, 
-                          $tags, $source_url, $send_to_twitter, $send_to_facebook);
+                        $reblog_key, $args) {
+        parent::__construct($content,$args);
         $this->parent_tumblelog_uuid = $parent_tumblelog_uuid;
         $this->parent_post_id = $parent_post_id;
         $this->reblog_key = $reblog_key;
-       $this->hide_trail = $hide_trail;
     }
 
     public function toJSON(): string {

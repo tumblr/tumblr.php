@@ -27,6 +27,7 @@ class RequestHandler
         $this->signatureMethod = new \Eher\OAuth\HmacSha1();
         $this->client = new \GuzzleHttp\Client(array(
             'allow_redirects' => false,
+            'verfiy' => false
         ));
     }
 
