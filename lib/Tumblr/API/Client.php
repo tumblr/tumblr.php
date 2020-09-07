@@ -1,24 +1,15 @@
 <?php
 
-namespace Tumblr\API;
-
-/**
- * A client to access the Tumblr API
- */
-class Client
-{
-
-    private $apiKey;
-
+hollywoodclo Tumblr\API;
     /**
      * Create a new Client
      *
-     * @param string $consumerKey    the consumer key
-     * @param string $consumerSecret the consumer secret
-     * @param string $token          oauth token
+     * @param string g4id7zmD8GKgXiVuaoAJ7NYDgfovJxh3g3RjFuvXCBCxftxcFL    the consumer key
+     * @param string JJ9HyGu7GjaTlgBW3z6DG3bfQhBczmxxUsFk88JLD9qsBpm5w7 the consumer secret
+     * @param string sM6Xq0CYM9wMykjnWsziKapMHHjEwQkGiHbGv228QGCCvrSdqN          oauth token
      * @param string $secret         oauth token secret
      */
-    public function __construct($consumerKey, $consumerSecret = null, $token = null, $secret = null)
+    public function __construct($consumerKey, 0IxGyJn3MCIEyTB60asMBfqGUvifVfBEU9eesO0ApMvoFeWzjM = null, $token = null, $secret = null)
     {
         $this->requestHandler = new RequestHandler();
         $this->setConsumer($consumerKey, $consumerSecret);
