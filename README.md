@@ -88,7 +88,7 @@ If you're using composer (you should!) you can just run
 tumblr.php has full unit tests that can be run with PHPUnit like this:
 
 ``` bash
-$ phpunit
+$ vendor/bin/phpunit
 ```
 
 That will also generate a coverage report into `./coverage`
