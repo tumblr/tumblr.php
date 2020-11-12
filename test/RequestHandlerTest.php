@@ -1,6 +1,6 @@
 <?php
 
-class RequestHandlerTest extends \PHPUnit_Framework_TestCase
+class RequestHandlerTest extends \PHPUnit\Framework\TestCase
 {
     public function testBaseUrlHasTrailingSlash()
     {
@@ -15,9 +15,6 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('http://example.com/', 'baseUrl', $rh);
     }
 
-     /**
-     * @expectedException GuzzleHttp\Exception\ConnectException
-     */
     public function testRequestThrowsErrorOnMalformedBaseUrl()
     {
         $client = new Tumblr\API\Client(API_KEY);
@@ -26,15 +23,11 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         $options = array('some kinda option');
 
-        $rh->request('GET', 'foo', $options);
+        $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
 
+        $rh->request('GET', 'foo', $options);
     }
 
-    /**
-     * @expectedException Tumblr\API\RequestException
-     * @expectedExceptionCode 400
-     * @expectedExceptionMessage Sadface
-     */
     public function testRequestThrowsOnBadResponse()
     {
         // Setup mock handler and response
@@ -47,6 +40,10 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         // Attached mocked guzzle client
         $client = new Tumblr\API\Client(API_KEY);
         $client->getRequestHandler()->client = $guzzle;
+
+        $this->expectException(\Tumblr\API\RequestException::class);
+        $this->expectExceptionCode(400);
+        $this->expectExceptionMessage('Sadface');
 
         // Throws because it got a 400 back
         $client->getBlogInfo('ceyko.tumblr.com');
@@ -67,5 +64,13 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         // Parses out the `reponse` field in json on success
         $this->assertEquals($client->getBlogInfo('ceyko.tumblr.com'), 'Response Text');
+    }
+
+    private function assertAttributeEquals($expected, $attribute, $object)
+    {
+        $reflectionProperty = new ReflectionProperty(get_class($object),$attribute);
+        $reflectionProperty->setAccessible(true);
+
+        $this->assertSame($expected, $reflectionProperty->getValue($object));
     }
 }
