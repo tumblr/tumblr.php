@@ -9,10 +9,10 @@ class RequestHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('Tumblr\API\RequestHandler', $rh);
 
         $rh->setBaseUrl('http://example.com');
-        $this->assertAttributeEquals('http://example.com/', 'baseUrl', $rh);
+        $this->assertAttributeEqualsCompat('http://example.com/', 'baseUrl', $rh);
 
         $rh->setBaseUrl('http://example.com/');
-        $this->assertAttributeEquals('http://example.com/', 'baseUrl', $rh);
+        $this->assertAttributeEqualsCompat('http://example.com/', 'baseUrl', $rh);
     }
 
     public function testRequestThrowsErrorOnMalformedBaseUrl()
@@ -66,7 +66,7 @@ class RequestHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($client->getBlogInfo('ceyko.tumblr.com'), 'Response Text');
     }
 
-    private function assertAttributeEquals($expected, $attribute, $object)
+    private function assertAttributeEqualsCompat($expected, $attribute, $object)
     {
         $reflectionProperty = new ReflectionProperty(get_class($object),$attribute);
         $reflectionProperty->setAccessible(true);
