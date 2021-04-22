@@ -23,7 +23,7 @@
 
   "require": {
     "eher/oauth": "1.0.*",
-    "guzzlehttp/guzzle": "^6"
+    "guzzlehttp/guzzle": "^7"
   },
 
   "require-dev": {
