@@ -1,6 +1,6 @@
 <?php
 
-class TaggedTest extends TumblrTest
+class TaggedTest extends TumblrTestCase
 {
     public function providerCalls()
     {

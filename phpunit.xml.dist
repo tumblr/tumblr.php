@@ -1,7 +1,7 @@
-<phpunit bootstrap="test/bootstrap.php" colors="true">
+<phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="Tumblr SDK for PHP - Test Suite">
-            <directory>test</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -9,4 +9,8 @@
             <directory suffix=".php">lib</directory>
         </whitelist>
     </filter>
+    <php>
+        <ini name="date.timezone" value="America/New_York"/>
+        <const name="API_KEY" value="the testing consumer key"/>
+    </php>
 </phpunit>

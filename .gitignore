@@ -1,12 +1,5 @@
-coverage
-.DS_Store
-
-composer.phar
-
-*.swp
-*.swo
-
-usage.php
-
-vendor
-composer.lock
+/composer.lock
+/vendor/
+/phpunit.xml
+/build/
+/.*.cache
