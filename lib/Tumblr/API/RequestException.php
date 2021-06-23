@@ -16,7 +16,11 @@ class RequestException extends \Exception
         if (isset($error->meta)) {
             $errstr = $error->meta->msg;
             if (isset($error->response->errors)) {
-                $errstr .= ' ('.$error->response->errors[0].')';
+                // Response from tumblr api seems changed
+                // Looks like it returns: $error->response->errors->one return a one instead of an array index
+                // Should be checked with if (isset($error->response->errors) && isset($error->response->errors[0])) { above
+                // This solutions allows to at least have errors visibility
+                $errstr .= ' ('.var_export($error->response->errors,true).')';
             }
         } elseif (isset($error->response->errors)) {
             $errstr = $error->response->errors[0];
