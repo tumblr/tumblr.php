@@ -1,6 +1,6 @@
 # tumblr.php
 
-[![Build Status](https://secure.travis-ci.org/tumblr/tumblr.php.png)](http://travis-ci.org/tumblr/tumblr.php)
+[![Build Status](https://secure.travis-ci.org/tumblr/tumblr.php.svg)](http://travis-ci.org/tumblr/tumblr.php)
 
 The official PHP client for the
 [Tumblr API](http://www.tumblr.com/docs/en/api/v2).
@@ -88,7 +88,7 @@ If you're using composer (you should!) you can just run
 tumblr.php has full unit tests that can be run with PHPUnit like this:
 
 ``` bash
-$ phpunit
+$ vendor/bin/phpunit
 ```
 
 That will also generate a coverage report into `./coverage`
