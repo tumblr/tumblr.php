@@ -6,3 +6,4 @@ require_once 'vendor/autoload.php';
 require_once 'test/TumblrTest.php';
 
 define('API_KEY', 'the testing consumer key');
+define('ACCESS_TOKEN', 'the testing access token');

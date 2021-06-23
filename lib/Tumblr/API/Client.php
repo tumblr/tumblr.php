@@ -9,22 +9,39 @@ class Client
 {
 
     private $apiKey;
+    private $is_oauth1;
 
     /**
      * Create a new Client
      *
-     * @param string $consumerKey    the consumer key
-     * @param string $consumerSecret the consumer secret
-     * @param string $token          oauth token
-     * @param string $secret         oauth token secret
+     * @param array $credentials     credentials for oauth1 or oauth2
+     * @param options
+     * credentials contain:
+     *      string consumerKey    the consumer key
+     *      string consumerSecret the consumer secret
+     *      string oauthToken     oauth token
+     *      string secret         oauth token secret
+     *      string oauth2Token    oauth2 access token
      */
-    public function __construct($consumerKey, $consumerSecret = null, $token = null, $secret = null)
+    public function __construct($credentials, $options=[])
     {
-        $this->requestHandler = new RequestHandler();
-        $this->setConsumer($consumerKey, $consumerSecret);
+        if (isset($credentials['consumerKey'])) {
+            $consumerKey = $credentials['consumerKey'];
+            $consumerSecret = isset($credentials['consumerSecret']) ? $credentials['consumerSecret'] : '';
+            $oauthToken = isset($credentials['oauthToken']) ? $credentials['oauthToken'] : '';
+            $secret = isset($credentials['secret']) ? $credentials['secret'] : '';
 
-        if ($token && $secret) {
-             $this->setToken($token, $secret);
+            $this->is_oauth1 = true;
+            $this->requestHandler = new RequestHandler();
+            $this->setConsumer($consumerKey, $consumerSecret);
+            $this->setToken($oauthToken, $secret);
+            echo ($oauthToken);
+            echo ($secret);
+        } elseif (isset($credentials['oauth2Token'])) {
+            $this->is_oauth1 = false;
+            $this->requestHandler = new RequestHandler2();
+            $options['access_token'] = $credentials['oauth2Token'];
+            $this->setToken(null, null, $options);
         }
     }
 
@@ -45,16 +62,21 @@ class Client
      *
      * @param string $token  the oauth token
      * @param string $secret the oauth secret
+     * @param array $options   An array of options. The `access_token` option is required.
      */
-    public function setToken($token, $secret)
+    public function setToken($token=null, $secret=null, $options=[])
     {
-        $this->requestHandler->setToken($token, $secret);
+        if (isset($token) && isset($secret)) {
+            $this->requestHandler->setToken($token, $secret);
+        } else {
+            $this->requestHandler->setToken($options);
+        }
     }
 
     /**
      * Retrieve RequestHandler instance
      *
-     * @return RequestHandler
+     * @return RequestHandler | RequestHandler2
      */
     public function getRequestHandler()
     {
@@ -243,7 +265,8 @@ class Client
         }
         $options['tag'] = $tag;
 
-        return $this->getRequest('v2/tagged', $options, true);
+        $addApiKey = $this->is_oauth1 ? true : false;
+        $this->getRequest('v2/tagged', $options, $addApiKey);
     }
 
     /**
@@ -256,7 +279,8 @@ class Client
     {
         $path = $this->blogPath($blogName, '/info');
 
-        return $this->getRequest($path, null, true);
+        $addApiKey = $this->is_oauth1 ? true : false;
+        return $this->getRequest($path, null, $addApiKey);
     }
 
     /**
@@ -274,7 +298,8 @@ class Client
             $path .= "/$size";
         }
 
-        return $this->getRedirect($path, null, true);
+        $addApiKey = $this->is_oauth1 ? true : false;
+        return $this->getRedirect($path, null, $addApiKey);
     }
 
     /**
@@ -288,8 +313,8 @@ class Client
     public function getBlogLikes($blogName, $options = null)
     {
         $path = $this->blogPath($blogName, '/likes');
-
-        return $this->getRequest($path, $options, true);
+        $addApiKey = $this->is_oauth1 ? true : false;
+        return $this->getRequest($path, $options, $addApiKey);
     }
 
     /**
@@ -323,7 +348,8 @@ class Client
             unset($options['type']);
         }
 
-        return $this->getRequest($path, $options, true);
+        $addApiKey = $this->is_oauth1 ? true : false;
+        return $this->getRequest($path, $options, $addApiKey);
     }
 
     /**

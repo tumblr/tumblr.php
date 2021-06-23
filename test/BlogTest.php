@@ -50,6 +50,54 @@ class BlogTest extends TumblrTest
         );
     }
 
+    public function providerCalls2()
+    {
+        $test = $this; // for inner context
+
+        return array(
+
+            // getBlogInfo
+            array(function ($c) { $c->getBlogInfo('b'); }, 'GET', 'v2/blog/b.tumblr.com/info', null),
+
+            // getBlogAvatar
+            array(function ($c) use ($test) {
+                $url = $c->getBlogAvatar('b');
+                $test->assertEquals($url, 'url');
+            }, 'GET', 'v2/blog/b.tumblr.com/avatar', null, 'redirect'),
+            array(function ($c) use ($test) {
+                $url = $c->getBlogAvatar('b');
+                $test->assertEquals($url, null);
+            }, 'GET', 'v2/blog/b.tumblr.com/avatar', null, 'not_found'),
+            array(function ($c) { $c->getBlogAvatar('b', 128); }, 'GET', 'v2/blog/b.tumblr.com/avatar/128', null),
+
+            // getBlogLikes
+            array(function ($c) { $c->getBlogLikes('b.n'); }, 'GET', 'v2/blog/b.n/likes', null),
+            array(function ($c) { $c->getBlogLikes('b.n', ['limit' => 10]); }, 'GET', 'v2/blog/b.n/likes', ['limit' => 10]),
+
+            // getBlogFollowers
+            array(function ($c) { $c->getBlogFollowers('b.n'); }, 'GET', 'v2/blog/b.n/followers', null),
+            array(function ($c) { $c->getBlogFollowers('b.n', ['limit' => 10]); }, 'GET', 'v2/blog/b.n/followers', ['limit' => 10]),
+
+            // getBlogPosts
+            array(function ($c) { $c->getBlogPosts('b.n'); }, 'GET', 'v2/blog/b.n/posts', null),
+            array(function ($c) { $c->getBlogPosts('b.n', ['limit' => 10]); }, 'GET', 'v2/blog/b.n/posts', ['limit' => 10]),
+            array(function ($c) { $c->getBlogPosts('b.n', ['type' => 'text']); }, 'GET', 'v2/blog/b.n/posts/text', []),
+
+            // getQueuedPosts
+            array(function ($c) { $c->getQueuedPosts('b.n'); }, 'GET', 'v2/blog/b.n/posts/queue', null),
+            array(function ($c) { $c->getQueuedPosts('b.n', ['limit' => 10]); }, 'GET', 'v2/blog/b.n/posts/queue', ['limit' => 10]),
+
+            // getDraftPosts
+            array(function ($c) { $c->getDraftPosts('b.n'); }, 'GET', 'v2/blog/b.n/posts/draft', null),
+            array(function ($c) { $c->getDraftPosts('b.n', ['limit' => 10]); }, 'GET', 'v2/blog/b.n/posts/draft', ['limit' => 10]),
+
+            // getSubmissionPosts
+            array(function ($c) { $c->getSubmissionPosts('b.n'); }, 'GET', 'v2/blog/b.n/posts/submission', null),
+            array(function ($c) { $c->getSubmissionPosts('b.n', ['limit' => 10]); }, 'GET', 'v2/blog/b.n/posts/submission', ['limit' => 10]),
+
+        );
+    }
+
     public function testNotFound()
     {
         try {

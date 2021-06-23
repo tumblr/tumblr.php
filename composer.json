@@ -22,6 +22,7 @@
   "type": "library",
 
   "require": {
+    "league/oauth2-client": "^2.0",
     "eher/oauth": "^1.0.7 <1.1",
     "guzzlehttp/guzzle": "^6.5.2 || ^7.0.1"
   },
