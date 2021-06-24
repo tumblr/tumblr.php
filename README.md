@@ -2,8 +2,7 @@
 
 [![CI](https://github.com/tumblr/tumblr.php/actions/workflows/ci.yaml/badge.svg)](https://github.com/tumblr/tumblr.php/actions/workflows/ci.yaml)
 
-The official PHP client for the
-[Tumblr API](http://www.tumblr.com/docs/en/api/v2).
+The official PHP client for the [Tumblr API](https://www.tumblr.com/docs/en/api/v2).
 
 ## Usage
 
@@ -73,25 +72,27 @@ $client->getTaggedPosts($tag, $options = null);
 
 ## Dependencies
 
-tumblr.php is available
-[on composer](https://packagist.org/packages/tumblr/tumblr)
+tumblr.php is available [on Packagist](https://packagist.org/packages/tumblr/tumblr)
 
-* guzzle/guzzle 6.*
+* guzzle/guzzle 6.x or 7.x
 * eher/oauth 1.0.x
 
-If you're using composer (you should!) you can just run
-`php composer.phar install` and you'll be good to go.  More details on
-[getcomposer.org](http://getcomposer.org/).
+If you're using Composer (you should!) you can just run `composer require tumblr/tumblr` and you'll be good to go.
+More details on [getcomposer.org](https://getcomposer.org/).
 
 ## Running tests
 
 tumblr.php has full unit tests that can be run with PHPUnit like this:
 
 ``` bash
-$ vendor/bin/phpunit
+php vendor/bin/phpunit
 ```
 
-That will also generate a coverage report into `./coverage`
+This will also generate a coverage report into `./build/coverage`:
+
+```bash
+php vendor/bin/phpunit --coverage-html=build/coverage
+```
 
 ## Copyright and license
 
