@@ -1,6 +1,6 @@
 <?php
 
-class TumblrTest extends \PHPUnit\Framework\TestCase
+abstract class TumblrTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider providerCalls

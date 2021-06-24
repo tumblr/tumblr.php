@@ -1,6 +1,6 @@
 <?php
 
-class UserTest extends TumblrTest
+class UserTest extends TumblrTestCase
 {
     public function providerCalls()
     {
