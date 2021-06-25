@@ -91,7 +91,7 @@ php vendor/bin/phpunit
 This will also generate a coverage report into `./build/coverage`:
 
 ```bash
-php vendor/bin/phpunit --coverage-html=build/coverage
+XDEBUG_MODE=coverage php vendor/bin/phpunit --coverage-html=build/coverage
 ```
 
 ## Copyright and license
