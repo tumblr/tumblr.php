@@ -34,5 +34,8 @@
     "psr-0": {
       "": "tests"
     }
+  },
+  "config": {
+    "allow-plugins": true
   }
 }
