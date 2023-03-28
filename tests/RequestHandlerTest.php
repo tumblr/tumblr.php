@@ -23,7 +23,7 @@ class RequestHandlerTest extends \PHPUnit\Framework\TestCase
 
         $options = array('some kinda option');
 
-        $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
+        $this->expectException(\GuzzleHttp\Exception\TransferException::class);
 
         $rh->request('GET', 'foo', $options);
     }
