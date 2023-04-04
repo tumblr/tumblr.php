@@ -4,6 +4,8 @@ namespace Tumblr\API;
 
 class RequestException extends \Exception
 {
+    /** @var string|int */
+    public $statusCode;
 
     /**
      * @param \stdClass $response
@@ -27,6 +29,10 @@ class RequestException extends \Exception
         parent::__construct($this->message, $this->statusCode);
     }
 
+    /**
+     * @return string
+     */
+    #[\ReturnTypeWillChange]
     public function __toString()
     {
         return __CLASS__ . ": [$this->statusCode]: $this->message\n";

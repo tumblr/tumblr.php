@@ -8,13 +8,21 @@ namespace Tumblr\API;
  */
 class RequestHandler
 {
-
+    /** @var \Eher\OAuth\Consumer */
     private $consumer;
+    /** @var \Eher\OAuth\Token */
     private $token;
+    /** @var \Eher\OAuth\HmacSha1 */
     private $signatureMethod;
 
+    /** @var string */
     private $baseUrl;
+
+    /** @var string */
     private $version;
+
+    /** @var \GuzzleHttp\Client */
+    public $client;
 
     /**
      * Instantiate a new RequestHandler
@@ -34,7 +42,8 @@ class RequestHandler
      * Set the consumer for this request handler
      *
      * @param string $key    the consumer key
-     * @param string $secret the consumer secret
+     * @param string|null $secret the consumer secret
+     * @return void
      */
     public function setConsumer($key, $secret)
     {
@@ -46,6 +55,7 @@ class RequestHandler
      *
      * @param string $token  the oauth token
      * @param string $secret the oauth secret
+     * @return void
      */
     public function setToken($token, $secret)
     {
@@ -56,6 +66,7 @@ class RequestHandler
      * Set the base url for this request handler.
      *
      * @param string $url The base url (e.g. https://api.tumblr.com)
+     * @return void
      */
     public function setBaseUrl($url)
     {
@@ -72,7 +83,7 @@ class RequestHandler
      *
      * @param string $method  one of GET, POST
      * @param string $path    the path to hit
-     * @param array  $options the array of params
+     * @param array|null  $options the array of params
      *
      * @return \stdClass response object
      */
@@ -96,7 +107,7 @@ class RequestHandler
         );
         $oauth->sign_request($this->signatureMethod, $this->consumer, $this->token);
         $authHeader = $oauth->to_header();
-        $pieces = explode(' ', $authHeader, 2);
+        $pieces = explode(' ', $authHeader, 2) + [1 => ''];
         $authString = $pieces[1];
 
 
