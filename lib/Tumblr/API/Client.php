@@ -7,16 +7,19 @@ namespace Tumblr\API;
  */
 class Client
 {
-
+    /** @var string */
     private $apiKey;
+
+    /** @var RequestHandler */
+    public $requestHandler;
 
     /**
      * Create a new Client
      *
      * @param string $consumerKey    the consumer key
-     * @param string $consumerSecret the consumer secret
-     * @param string $token          oauth token
-     * @param string $secret         oauth token secret
+     * @param string|null $consumerSecret the consumer secret
+     * @param string|null $token          oauth token
+     * @param string|null $secret         oauth token secret
      */
     public function __construct($consumerKey, $consumerSecret = null, $token = null, $secret = null)
     {
@@ -32,7 +35,8 @@ class Client
      * Set the consumer for this client
      *
      * @param string $consumerKey    the consumer key
-     * @param string $consumerSecret the consumer secret
+     * @param string|null $consumerSecret the consumer secret
+     * @return void
      */
     public function setConsumer($consumerKey, $consumerSecret)
     {
@@ -265,7 +269,7 @@ class Client
      * @param string $blogName the nae of the blog to look up
      * @param int    $size     the size to retrieve
      *
-     * @return string the avatar url
+     * @return string|null the avatar url
      */
     public function getBlogAvatar($blogName, $size = null)
     {
@@ -375,7 +379,7 @@ class Client
      * Make a GET request to the given endpoint and return the response
      *
      * @param string $path      the path to call on
-     * @param array  $options   the options to call with
+     * @param array|null  $options   the options to call with
      * @param bool   $addApiKey whether or not to add the api key
      *
      * @return array the response object (parsed)
@@ -432,10 +436,10 @@ class Client
      * Make a GET request to the given endpoint and return the response
      *
      * @param string $path      the path to call on
-     * @param array  $options   the options to call with
+     * @param array|null  $options   the options to call with
      * @param bool   $addApiKey whether or not to add the api key
      *
-     * @return string url redirected to (or null)
+     * @return string|null url redirected to (or null)
      */
     private function getRedirect($path, $options, $addApiKey)
     {
@@ -452,7 +456,7 @@ class Client
      *
      * @param string $method    the method to call: GET, POST
      * @param string $path      the path to call on
-     * @param array  $options   the options to call with
+     * @param array|null  $options   the options to call with
      * @param bool   $addApiKey whether or not to add the api key
      *
      * @return \stdClass the response object (not parsed)
