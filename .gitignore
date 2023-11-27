@@ -3,3 +3,5 @@
 /phpunit.xml
 /build/
 /.*.cache
+/.idea/
+
