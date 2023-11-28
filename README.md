@@ -70,6 +70,10 @@ $client->reblogPost($blogName, $id, $reblogKey, $options = null);
 $client->getTaggedPosts($tag, $options = null);
 ```
 
+## Examples
+
+Examples and "Getting Started" guide are available in [the `examples` folder](examples). 
+
 ## Dependencies
 
 tumblr.php is available [on Packagist](https://packagist.org/packages/tumblr/tumblr)
